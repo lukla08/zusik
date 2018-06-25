@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Settings settings = new Settings();
-            settings.setWorkingDays(10);
+            settings.setWorkingDays(11);
             SalaryDatabase.getInstance(this).settingsDao().insertOrUpdate(settings);
             return true;
         }
