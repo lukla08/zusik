@@ -13,6 +13,7 @@ public class Settings {
     @ColumnInfo(name = "id")
     private long id = PREDEFINED_ID;
 
+
     @ColumnInfo(name = "working_days")
     private int workingDays;
 

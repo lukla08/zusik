@@ -1,6 +1,11 @@
-package com.example.jac.place;
+package com.example.jac.place.frontend;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.jac.place.R;
 import com.example.jac.place.backend.SalaryDatabase;
 import com.example.jac.place.backend.model.Settings;
+import com.example.jac.place.system.thread_pool.SystemThreadPool;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Settings settings = new Settings();
             settings.setWorkingDays(11);
-            SalaryDatabase.getInstance(this).settingsDao().insertOrUpdate(settings);
+
+            SystemThreadPool.getInstance().executeDBAction(MainActivity.this,
+                    database -> database.settingsDao().insertOrUpdate(settings));
+
             return true;
         }
 
