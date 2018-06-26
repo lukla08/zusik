@@ -1,31 +1,29 @@
 package com.example.jac.place.frontend;
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.jac.place.R;
-import com.example.jac.place.backend.SalaryDatabase;
+import com.example.jac.place.app.tread_pool.helper.AppConst;
 import com.example.jac.place.backend.model.Settings;
-import com.example.jac.place.system.thread_pool.SystemThreadPool;
+import com.example.jac.place.frontend.base.BaseAppCompatActivity;
+import com.example.jac.place.frontend.firm.list.FirmListActivity;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
+
+public class MainActivity extends BaseAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -54,13 +52,21 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        if (id == R.id.action_firms) {
+            Intent intent = new Intent(this, FirmListActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         if (id == R.id.action_settings) {
             Settings settings = new Settings();
             settings.setWorkingDays(11);
 
-            SystemThreadPool.getInstance().executeDBAction(MainActivity.this,
-                    database -> database.settingsDao().insertOrUpdate(settings));
-
+            getBackgroundExecutor().execute(database -> database.settingsDao().insertOrUpdate(settings));
+            getBackgroundExecutor().execute(database -> {
+                List<Settings> allSettings = database.settingsDao().getAllSettings();
+                Log.d(AppConst.APP_TAG, "settingsCount:" + allSettings.size());
+            });
             return true;
         }
 
