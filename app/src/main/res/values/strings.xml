@@ -4,4 +4,5 @@
     <string name="action_employees">Employees</string>
     <string name="action_firms">Firms</string>
     <string name="title_activity_firm_list">FirmListActivity</string>
-    </resources>
+    <string name="title_activity_firm_edit">FirmEditActivity</string>
+</resources>
