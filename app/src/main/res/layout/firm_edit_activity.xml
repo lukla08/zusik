@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".frontend.firm.edit.FirmEditActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_firm_edit"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TableRow
+            android:id="@+id/tableRowFirmCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelFirmCode"
+                android:text="firmCode"
+                />
+            <EditText
+                android:id="@+id/editFirmCode"
+                android:hint="Type firm code"
+                android:ems="10"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRowFirmName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelFirmName"
+                android:text="firmName"
+                />
+            <EditText
+                android:id="@+id/editFirmName"
+                android:hint="Type firm name"
+                android:ems="20"
+                />
+        </TableRow>
+
+    </TableLayout>
+
+
+
+</android.support.design.widget.CoordinatorLayout>
