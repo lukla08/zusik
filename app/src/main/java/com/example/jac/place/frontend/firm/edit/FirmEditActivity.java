@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.example.jac.place.R;
@@ -55,6 +56,27 @@ public class FirmEditActivity extends AppCompatActivity {
         }.execute();
     }
 
+    private void saveCurrentRecord() {
+        Firm firm = new Firm();
+        firm.setFirmCode(editFirmCode.getText().toString());
+        firm.setFirmName(editFirmName.getText().toString());
+        firm.setFirmId(selectedRecordId);
+
+        new AsyncTask<Void, Void, Boolean>() {
+
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                SalaryDatabase.getInstance(FirmEditActivity.this).firmsDao().insertOrUpdate(firm);
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                FirmEditActivity.this.finish();
+            }
+        }.execute();
+    }
+
     private boolean isInsertMode() {
         return selectedRecordId <= 0;
     }
@@ -64,4 +86,17 @@ public class FirmEditActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_firm_edit, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.action_save_firm :
+                saveCurrentRecord();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //    action_save_firm
 }
