@@ -16,14 +16,15 @@ import java.util.List;
 
 public class FirmListViewModel extends AndroidViewModel {
 
+    private LiveData<List<Firm>> firms;
 
     public FirmListViewModel(@NonNull Application application) {
         super(application);
     }
 
     public LiveData<List<Firm>> getFirms() {
-
         return SalaryDatabase.getInstance(getApplication()).firmsDao().getFirmsLiveData();
-
     }
+
+
 }

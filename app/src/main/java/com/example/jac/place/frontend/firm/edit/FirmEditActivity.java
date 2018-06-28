@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.jac.place.R;
@@ -17,23 +18,25 @@ import com.example.jac.place.backend.model.Firm;
 public class FirmEditActivity extends AppCompatActivity {
 
     public static String EXTRA_KEY_SELECTED_RECORD_ID = "selected_record_id";
-    private int selectedRecordId;
+    private long selectedRecordId;
 
-    private EditText editFirmCode;
     private EditText editFirmName;
+    private CheckBox cFirmEnabled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        selectedRecordId = getIntent().getIntExtra(EXTRA_KEY_SELECTED_RECORD_ID, 0);
+        selectedRecordId = getIntent().getLongExtra(EXTRA_KEY_SELECTED_RECORD_ID, 0);
+        Log.d(AppConst.APP_TAG, "selectedId : " + selectedRecordId);
 
         setContentView(R.layout.firm_edit_activity);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_firm_edit);
         setSupportActionBar(toolbar);
 
-        editFirmCode = findViewById(R.id.editFirmCode);
         editFirmName = findViewById(R.id.editFirmName);
+        cFirmEnabled = findViewById(R.id.checkFirmEnabled);
+        cFirmEnabled.setChecked(true);
 
         setTitle(isInsertMode()?
                 R.string.title_activity_firm_insert : R.string.title_activity_firm_edit);
@@ -50,16 +53,16 @@ public class FirmEditActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Firm firm) {
-                editFirmCode.setText(firm.getFirmCode());
                 editFirmName.setText(firm.getFirmName());
+                cFirmEnabled.setChecked(firm.getDisabled() == 0);
             }
         }.execute();
     }
 
     private void saveCurrentRecord() {
         Firm firm = new Firm();
-        firm.setFirmCode(editFirmCode.getText().toString());
         firm.setFirmName(editFirmName.getText().toString());
+        firm.setDisabled(cFirmEnabled.isChecked()? 0 : 1);
         firm.setFirmId(selectedRecordId);
 
         new AsyncTask<Void, Void, Boolean>() {

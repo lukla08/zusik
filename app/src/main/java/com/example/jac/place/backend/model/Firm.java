@@ -10,11 +10,11 @@ public class Firm {
     @ColumnInfo(name = "firm_id")
     private long firmId;
 
-    @ColumnInfo(name = "firm_code")
-    private String firmCode;
-
     @ColumnInfo(name = "firm_name")
     private String firmName;
+
+    @ColumnInfo(name = "is_disabled")
+    private int disabled;
 
     public long getFirmId() {
         return firmId;
@@ -24,13 +24,6 @@ public class Firm {
         this.firmId = firmId;
     }
 
-    public String getFirmCode() {
-        return firmCode;
-    }
-
-    public void setFirmCode(String firmCode) {
-        this.firmCode = firmCode;
-    }
 
     public String getFirmName() {
         return firmName;
@@ -38,5 +31,18 @@ public class Firm {
 
     public void setFirmName(String firmName) {
         this.firmName = firmName;
+    }
+
+    public int getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(int disabled) {
+        this.disabled = disabled;
+    }
+
+    @Override
+    public String toString() {
+        return firmName;
     }
 }

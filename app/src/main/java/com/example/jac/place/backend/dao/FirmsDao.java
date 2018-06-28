@@ -16,9 +16,13 @@ public interface FirmsDao {
     @Query("select * from firm")
     LiveData<List<Firm>> getFirmsLiveData();
 
+
+    @Query("Select count(*) from firm")
+    int getRecordCount();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertOrUpdate(Firm ... firms);
 
     @Query("select * from firm where firm_id = :id")
-    Firm getSelectedFirm(int id);
+    Firm getSelectedFirm(long  id);
 }

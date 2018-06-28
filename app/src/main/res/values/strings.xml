@@ -4,7 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_edit_form_settings">Edit form settings</string>
     <string name="action_employees">Employees</string>
-    <string name="action_firms">Firms</string>
+    <string name="action_firms">Firmy</string>
     <string name="title_activity_firm_list">FirmList</string>
     <string name="title_activity_firm_edit">FirmEdit</string>
     <string name="title_activity_firm_insert">FirmInsert</string>
