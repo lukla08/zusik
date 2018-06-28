@@ -1,22 +1,30 @@
 package com.example.jac.place.frontend;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 
 import com.example.jac.place.R;
 import com.example.jac.place.app.tread_pool.helper.AppConst;
+import com.example.jac.place.backend.SalaryDatabase;
+import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.backend.model.Settings;
 import com.example.jac.place.frontend.base.BaseAppCompatActivity;
+import com.example.jac.place.frontend.employee.list.EmployeeListActivity;
 import com.example.jac.place.frontend.firm.list.FirmListActivity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainActivity extends BaseAppCompatActivity {
 
@@ -58,6 +66,12 @@ public class MainActivity extends BaseAppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_employees) {
+            showDialogSelectFirm();
+            return true;
+        }
+
+
         if (id == R.id.action_settings) {
             Settings settings = new Settings();
             settings.setWorkingDays(11);
@@ -72,4 +86,33 @@ public class MainActivity extends BaseAppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    private void showDialogSelectFirm() {
+
+        new AsyncTask<Void, Void, List<Firm>>() {
+            @Override  protected List<Firm> doInBackground(Void... voids) {
+                List<Firm> allFirms = SalaryDatabase.getInstance(MainActivity.this).firmsDao().getFirmsData();
+                return allFirms.stream().filter(firm -> firm.getDisabled() == 0)
+                        .collect(Collectors.toList());
+            }
+            @Override protected void onPostExecute(List<Firm> firms) {
+                CharSequence[] names = new CharSequence[firms.size()];
+                for (int index = 0; index < firms.size(); index ++) {
+                    names[index] = firms.get(index).getFirmName();
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setItems(names, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int index) {
+                        Intent intent = new Intent(MainActivity.this, EmployeeListActivity.class);
+                        intent.putExtra(EmployeeListActivity.EXTRA_KEY_SELECTED_FIRM_ID, firms.get(index).getFirmId());
+                        intent.putExtra(EmployeeListActivity.EXTRA_KEY_SELECTED_FIRM_NAME, firms.get(index).getFirmName());
+                        startActivity(intent);
+                    }
+                });
+                builder.create().show();
+            }
+        }.execute();
+
+    }
+
 }

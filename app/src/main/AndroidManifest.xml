@@ -27,6 +27,16 @@
             android:name=".frontend.firm.edit.FirmEditActivity"
             android:label="@string/title_activity_firm_edit"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".frontend.employee.list.EmployeeListActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".frontend.employee.list.EmployeeEditActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
     </application>
 
 </manifest>

@@ -11,26 +11,17 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.jac.place.R;
-import com.example.jac.place.app.tread_pool.helper.AppConst;
 import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.frontend.base.BaseAppCompatActivity;
 import com.example.jac.place.frontend.firm.edit.FirmEditActivity;
-import com.example.jac.place.frontend.firm.list.viewmodel.FirmListViewModel;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FirmListActivity extends BaseAppCompatActivity {
 

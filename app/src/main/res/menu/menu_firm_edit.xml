@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.jac.place.frontend.firm.edit.FirmEditActivity">
     <item
-        android:id="@+id/action_save_firm"
+        android:id="@+id/action_save"
         android:orderInCategory="100"
         android:title="@string/action_save_title"
         app:showAsAction="ifRoom" />

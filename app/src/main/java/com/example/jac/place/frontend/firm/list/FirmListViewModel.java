@@ -1,4 +1,4 @@
-package com.example.jac.place.frontend.firm.list.viewmodel;
+package com.example.jac.place.frontend.firm.list;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

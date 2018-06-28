@@ -94,7 +94,7 @@ public class FirmEditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
-            case R.id.action_save_firm :
+            case R.id.action_save:
                 saveCurrentRecord();
                 return true;
         }

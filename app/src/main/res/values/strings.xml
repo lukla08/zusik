@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Place</string>
-    <string name="action_save_title">Save</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_edit_form_settings">Edit form settings</string>
-    <string name="action_employees">Employees</string>
+    <string name="app_name">Płace</string>
+    <string name="action_save_title">Zapisz</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="action_edit_form_settings">Edycja ustawiania</string>
+    <string name="action_employees">Pracownicy</string>
     <string name="action_firms">Firmy</string>
     <string name="title_activity_firm_list">FirmList</string>
-    <string name="title_activity_firm_edit">FirmEdit</string>
-    <string name="title_activity_firm_insert">FirmInsert</string>
+    <string name="title_activity_firm_edit">Edycja firmy</string>
+    <string name="title_activity_firm_insert">Nowa firma</string>
 </resources>

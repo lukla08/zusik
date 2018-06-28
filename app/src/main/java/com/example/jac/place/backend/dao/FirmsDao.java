@@ -13,9 +13,11 @@ import java.util.List;
 
 @Dao
 public interface FirmsDao {
-    @Query("select * from firm")
+    @Query("select * from firm order by firm_name")
     LiveData<List<Firm>> getFirmsLiveData();
 
+    @Query("select * from firm order by firm_name")
+    List<Firm> getFirmsData();
 
     @Query("Select count(*) from firm")
     int getRecordCount();

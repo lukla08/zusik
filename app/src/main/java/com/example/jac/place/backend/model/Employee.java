@@ -7,18 +7,21 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "employee")
 public class Employee {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate =  true)
     @ColumnInfo(name = "id_employee")
     private long employeeId;
+
+    @ColumnInfo(name = "name")
+    private String name;
+
+    @ColumnInfo(name = "is_disabled")
+    private int disabled;
 
     @ColumnInfo(name = "id_firm")
     private long firmId;
 
     @ColumnInfo(name = "is_owner")
     private boolean isOwner;
-
-    @ColumnInfo(name = "working_days")
-    private int workingDays;
 
     @ColumnInfo(name = "holiday_days")
     private int holidayDays;
@@ -28,8 +31,8 @@ public class Employee {
 
     private double salary;
 
-    @ColumnInfo(name = "avg6m_salary")
-    private double avg6MSalary;
+    @ColumnInfo(name = "avg12m_salary")
+    private double avg12MSalary;
 
 
     public long getEmployeeId() {
@@ -56,13 +59,6 @@ public class Employee {
         isOwner = owner;
     }
 
-    public int getWorkingDays() {
-        return workingDays;
-    }
-
-    public void setWorkingDays(int workingDays) {
-        this.workingDays = workingDays;
-    }
 
     public int getHolidayDays() {
         return holidayDays;
@@ -88,11 +84,32 @@ public class Employee {
         this.salary = salary;
     }
 
-    public double getAvg6MSalary() {
-        return avg6MSalary;
+    public double getAvg12MSalary() {
+        return avg12MSalary;
     }
 
-    public void setAvg6MSalary(double avg6MSalary) {
-        this.avg6MSalary = avg6MSalary;
+    public void setAvg12MSalary(double avg12MSalary) {
+        this.avg12MSalary = avg12MSalary;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(int disabled) {
+        this.disabled = disabled;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
