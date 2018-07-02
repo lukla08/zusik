@@ -1,4 +1,4 @@
-package com.example.jac.place.frontend.firm.list;
+package com.example.jac.place.frontend.firm;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.example.jac.place.R;
 import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.frontend.base.BaseAppCompatActivity;
-import com.example.jac.place.frontend.firm.edit.FirmEditActivity;
 
 public class FirmListActivity extends BaseAppCompatActivity {
 

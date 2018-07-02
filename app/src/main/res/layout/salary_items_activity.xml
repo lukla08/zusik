@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".frontend.firm.FirmEditActivity">
+    tools:context=".frontend.employee.salary_items.SalaryItemsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -35,10 +35,8 @@
                 android:id="@+id/labelEmployeeName"
                 android:text="Nazwisko i imię"
                 />
-            <EditText
+            <TextView
                 android:id="@+id/editEmployeeName"
-                android:hint="Podaj nazwisko i imię"
-                android:ems="20"
                 />
         </TableRow>
 
@@ -51,9 +49,8 @@
                 android:id="@+id/labelSalary"
                 android:text="Wynagrodzenie"
                 />
-            <EditText
+            <TextView
                 android:id="@+id/editSalary"
-                android:hint="Podaj wynagrodzenie"
                 android:inputType="numberDecimal"
                 />
         </TableRow>
@@ -67,15 +64,14 @@
                 android:id="@+id/labelSalary12m"
                 android:text="Średnia ost. 12 m."
                 />
-            <EditText
+            <TextView
                 android:id="@+id/editSalary12M"
-                android:hint="Podaj średnią"
                 android:inputType="numberDecimal"
                 />
         </TableRow>
 
         <TableRow
-            android:id="@+id/tableIllness"
+            android:id="@+id/tableRowIllness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dip" >
@@ -83,41 +79,12 @@
                 android:id="@+id/labelIllness"
                 android:text="Chorobowe - dni"
                 />
-            <EditText
+            <TextView
                 android:id="@+id/editIllness"
-                android:hint="Podaj chorobowe"
                 android:inputType="numberSigned"
                 />
         </TableRow>
 
-
-        <TableRow
-            android:id="@+id/tableEmployeeOwner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dip" >
-            <TextView
-                android:id="@+id/labelEmployeeOwner"
-                android:text="Właściciel"
-                />
-            <CheckBox
-                android:id="@+id/checkEmployeeOwner"
-                />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableEmployeeEnabled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dip" >
-            <TextView
-                android:id="@+id/labelEmployeeEnabled"
-                android:text="Aktywny"
-                />
-            <CheckBox
-                android:id="@+id/checkEmployeeEnabled"
-                />
-        </TableRow>
 
 
     </TableLayout>

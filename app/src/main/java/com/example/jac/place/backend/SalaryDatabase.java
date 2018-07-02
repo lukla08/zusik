@@ -14,7 +14,7 @@ import com.example.jac.place.backend.model.Settings;
 
 @Database(entities = {Settings.class, Employee.class, Firm.class}, version = 1, exportSchema = false)
 public abstract class SalaryDatabase extends RoomDatabase {
-    private static final String DATABASE_NAME = "place9.gdb";
+    private static final String DATABASE_NAME = "place10.gdb";
     private static volatile SalaryDatabase instance;
 
     public static synchronized SalaryDatabase getInstance(Context context) {

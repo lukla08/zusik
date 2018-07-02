@@ -1,6 +1,7 @@
-package com.example.jac.place.frontend.employee.list;
+package com.example.jac.place.frontend.employee;
 
-import android.arch.persistence.room.util.StringUtil;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,9 @@ import com.example.jac.place.app.tread_pool.helper.AppConst;
 import com.example.jac.place.app.utils.StringUtils;
 import com.example.jac.place.backend.SalaryDatabase;
 import com.example.jac.place.backend.model.Employee;
+import com.example.jac.place.backend.model.SalaryItems;
+import com.example.jac.place.backend.model.utils.SalaryItemsCalcUtils;
+import com.example.jac.place.frontend.employee.salary_items.SalaryItemsActivity;
 
 public class EmployeeEditActivity extends AppCompatActivity {
 
@@ -27,7 +31,6 @@ public class EmployeeEditActivity extends AppCompatActivity {
     private EditText editFirmName;
     private EditText editSalary;
     private EditText editSalary12m;
-    private EditText editHolidays;
     private EditText editIllness;
     private CheckBox cEmployeeEnabled;
     private CheckBox cEmployeeOwner;
@@ -47,7 +50,6 @@ public class EmployeeEditActivity extends AppCompatActivity {
         editFirmName = findViewById(R.id.editEmployeeName);
         editSalary = findViewById(R.id.editSalary);
         editSalary12m = findViewById(R.id.editSalary12M);
-        editHolidays = findViewById(R.id.editHolidays);
         editIllness = findViewById(R.id.editIllness);
 
         cEmployeeOwner = findViewById(R.id.checkEmployeeOwner);
@@ -74,26 +76,31 @@ public class EmployeeEditActivity extends AppCompatActivity {
                 cEmployeeOwner.setChecked(emp.isOwner());
                 editSalary.setText(Double.toString(emp.getSalary()));
                 editSalary12m.setText(Double.toString(emp.getAvg12MSalary()));
-                editHolidays.setText(Integer.toString(emp.getHolidayDays()));
                 editIllness.setText(Integer.toString(emp.getIllnessDays()));
             }
         }.execute();
     }
 
-    private void saveCurrentRecord() {
+    private Employee getRecordPopulatedWithControls() {
         Employee emp = new Employee();
         emp.setName(editFirmName.getText().toString());
         emp.setSalary(StringUtils.toDouble(editSalary.getText().toString()));
         emp.setAvg12MSalary(StringUtils.toDouble(editSalary12m.getText().toString()));
 
-        emp.setHolidayDays(StringUtils.toInt(editHolidays.getText().toString()));
+
         emp.setIllnessDays(StringUtils.toInt(editIllness.getText().toString()));
 
         emp.setFirmId(selectedFirmId);
         emp.setEmployeeId(selectedRecordId);
         emp.setDisabled(cEmployeeEnabled.isChecked()? 0 : 1);
         emp.setOwner(cEmployeeOwner.isChecked());
+        return emp;
+    }
 
+    private void saveCurrentRecord() {
+        Employee emp = getRecordPopulatedWithControls();
+        SalaryItems salaryItems = SalaryItemsCalcUtils.prepareSalaryItems4Employee(emp);
+        Log.d(AppConst.APP_TAG, "salary:" + salaryItems);
 
         new AsyncTask<Void, Void, Boolean>() {
 
@@ -127,8 +134,35 @@ public class EmployeeEditActivity extends AppCompatActivity {
             case R.id.action_save :
                 saveCurrentRecord();
                 return true;
+
+            case R.id.action_show_calc_items :
+                showSalaryItems();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void showSalaryItems() {
+        Employee emp = getRecordPopulatedWithControls();
+        SalaryItems salaryItems = SalaryItemsCalcUtils.prepareSalaryItems4Employee(emp);
+
+        new AsyncTask<Void, Void, Boolean>() {
+
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                SalaryDatabase.getInstance(EmployeeEditActivity.this).employeeDao().insertOrUpdate(emp);
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                Intent intent = new Intent(EmployeeEditActivity.this, SalaryItemsActivity.class);
+                intent.putExtra(SalaryItemsActivity.EXTRA_KEY_SELECTED_EMPLOYEE_ID, emp.getEmployeeId());
+                startActivity(intent);
+            }
+        }.execute();
+
     }
 
     //    action_save_firm

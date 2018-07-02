@@ -1,4 +1,4 @@
-package com.example.jac.place.frontend.employee.list;
+package com.example.jac.place.frontend.employee;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

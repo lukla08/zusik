@@ -1,4 +1,4 @@
-package com.example.jac.place.frontend.firm.edit;
+package com.example.jac.place.frontend.firm;
 
 import android.os.AsyncTask;
 import android.os.Bundle;

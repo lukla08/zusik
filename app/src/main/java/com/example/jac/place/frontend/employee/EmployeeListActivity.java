@@ -1,4 +1,4 @@
-package com.example.jac.place.frontend.employee.list;
+package com.example.jac.place.frontend.employee;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
@@ -22,7 +22,6 @@ import com.example.jac.place.R;
 import com.example.jac.place.backend.model.Employee;
 import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.frontend.base.BaseAppCompatActivity;
-import com.example.jac.place.frontend.firm.edit.FirmEditActivity;
 
 import java.util.List;
 
@@ -109,9 +108,9 @@ public class EmployeeListActivity extends BaseAppCompatActivity {
     private void prepareSampleEmployees() {
         Employee emp1 = new Employee();
         emp1.setName("Pracownik 1");
-        emp1.setSalary(2000);
-        emp1.setAvg12MSalary(2500);
-        emp1.setOwner(true);
+        emp1.setSalary(1680);
+        emp1.setAvg12MSalary(1620);
+        emp1.setIllnessDays(3);
 
         Employee emp2 = new Employee();
         emp2.setName("Pracownik 2");

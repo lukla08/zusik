@@ -23,9 +23,6 @@ public class Employee {
     @ColumnInfo(name = "is_owner")
     private boolean isOwner;
 
-    @ColumnInfo(name = "holiday_days")
-    private int holidayDays;
-
     @ColumnInfo(name = "illness_days")
     private int illnessDays;
 
@@ -59,14 +56,6 @@ public class Employee {
         isOwner = owner;
     }
 
-
-    public int getHolidayDays() {
-        return holidayDays;
-    }
-
-    public void setHolidayDays(int holidayDays) {
-        this.holidayDays = holidayDays;
-    }
 
     public int getIllnessDays() {
         return illnessDays;

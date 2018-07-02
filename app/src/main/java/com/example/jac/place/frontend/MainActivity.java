@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 
 import com.example.jac.place.R;
 import com.example.jac.place.app.tread_pool.helper.AppConst;
@@ -20,8 +19,8 @@ import com.example.jac.place.backend.SalaryDatabase;
 import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.backend.model.Settings;
 import com.example.jac.place.frontend.base.BaseAppCompatActivity;
-import com.example.jac.place.frontend.employee.list.EmployeeListActivity;
-import com.example.jac.place.frontend.firm.list.FirmListActivity;
+import com.example.jac.place.frontend.employee.EmployeeListActivity;
+import com.example.jac.place.frontend.firm.FirmListActivity;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Płace</string>
     <string name="action_save_title">Zapisz</string>
+    <string name="action_show_calc_items">Pokaż składniki</string>
     <string name="action_settings">Ustawienia</string>
     <string name="action_edit_form_settings">Edycja ustawiania</string>
     <string name="action_employees">Pracownicy</string>
