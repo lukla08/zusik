@@ -20,11 +20,31 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TableLayout
         android:id="@+id/tableLayout1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TableRow>
+            <TextView/>
+        </TableRow>
+
+        <TableRow>
+            <TextView/>
+        </TableRow>
+
+        <TableRow>
+            <TextView/>
+        </TableRow>
+
+        <TableRow>
+            <TextView/>
+        </TableRow>
+
 
         <TableRow
             android:id="@+id/tableRowEmployeeName"
@@ -85,10 +105,254 @@
                 />
         </TableRow>
 
+        <TableRow
+            android:id="@+id/tableRowCostOfObtaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelCostOfObtaining"
+                android:text="Chorobowe - dni"
+                />
+            <TextView
+                android:id="@+id/editCostOfObtaining"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRowCalcSalary12m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelCalcSalary12m"
+                android:text="Śr. ost. 12 m netto"
+                />
+            <TextView
+                android:id="@+id/editCalcSalary12m"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRowIllnessDailyRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelIllnessDailyRate"
+                android:text="Dzienna stawka chorobowa"
+                />
+            <TextView
+                android:id="@+id/editIllnessDailyRate"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRowIllnessPart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelIllnessPart"
+                android:text="Wynagr. za czas choroby"
+                />
+            <TextView
+                android:id="@+id/editIllnessPart"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableNormalDailyRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelNormalDailyRate"
+                android:text="Dzienna stawka przepr."
+                />
+            <TextView
+                android:id="@+id/editNormalDailyRate"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableSalaryNormalPart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelSalaryNormalPart"
+                android:text="Wynagr. czas. przeprac"
+                />
+            <TextView
+                android:id="@+id/editSalaryNormalPart"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableSalaryTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelSalaryTotal"
+                android:text="Wynagr. razem"
+                />
+            <TextView
+                android:id="@+id/editSalaryTotal"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableBase4SocialTax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelBase4SocialTax"
+                android:text="Podst. ub. społeczne"
+                />
+            <TextView
+                android:id="@+id/editBase4SocialTax"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowSocialTax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelSocialTax"
+                android:text="Ub. społeczne razem"
+                />
+            <TextView
+                android:id="@+id/editSocialTax"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowBase4HealthTax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelBase4HealthTax"
+                android:text="Podst. ubez. zdrowotne"
+                />
+            <TextView
+                android:id="@+id/editBase4HealthTax"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/rowHealthToTake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelHealthToTake"
+                android:text="Skł. zdrow. pobrana"
+                />
+            <TextView
+                android:id="@+id/editHealthToTake"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowHealthToDeduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelHealthToDeduct"
+                android:text="Skł. zdrow. odliczona"
+                />
+            <TextView
+                android:id="@+id/editHealthToDeduct"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowBaseIncomeTax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelIncomeTax"
+                android:text="Podstawa - dochodowy"
+                />
+            <TextView
+                android:id="@+id/editBaseIncomeTax"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowAdvanceIncomeTaxBrutto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelAdvanceIncomeTaxBrutto"
+                android:text="Zaliczka - doch. brutto"
+                />
+            <TextView
+                android:id="@+id/editAdvanceIncomeTaxBrutto"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/rowAdvanceIncomeTax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelAdvanceIncomeTax"
+                android:text="ZALICZKA DOCHODOWY"
+                />
+            <TextView
+                android:id="@+id/editAdvanceIncomeTax"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/rowAmoundDue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelAmountDue"
+                android:text="DO WYPŁATY"
+                />
+            <TextView
+                android:id="@+id/editAmountDue"
+                android:inputType="numberSigned"
+                />
+        </TableRow>
+
+
 
 
     </TableLayout>
-
+    </ScrollView>
 
 
 </android.support.design.widget.CoordinatorLayout>
