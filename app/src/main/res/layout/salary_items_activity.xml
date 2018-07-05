@@ -226,6 +226,54 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/rowSocialPension"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelSocialPension"
+                android:text="Skł. emerytalna"
+                />
+            <EditText
+                android:id="@+id/editSocialPension"
+                android:inputType="numberSigned"
+                android:selectAllOnFocus="true"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowSocialRent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelSocialRent"
+                android:text="Skł. rentowa"
+                />
+            <EditText
+                android:id="@+id/editSocialRent"
+                android:inputType="numberSigned"
+                android:selectAllOnFocus="true"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowSocialIllness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelSocialIllness"
+                android:text="Skł. chorobowa"
+                />
+            <EditText
+                android:id="@+id/editSocialIllness"
+                android:inputType="numberSigned"
+                android:selectAllOnFocus="true"
+                />
+        </TableRow>
+
+        <TableRow
             android:id="@+id/rowSocialTax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -265,9 +313,10 @@
                 android:id="@+id/labelHealthToTake"
                 android:text="Skł. zdrow. pobrana"
                 />
-            <TextView
+            <EditText
                 android:id="@+id/editHealthToTake"
                 android:inputType="numberSigned"
+                android:selectAllOnFocus="true"
                 />
         </TableRow>
 
@@ -326,9 +375,10 @@
                 android:id="@+id/labelAdvanceIncomeTax"
                 android:text="ZALICZKA DOCHODOWY"
                 />
-            <TextView
+            <EditText
                 android:id="@+id/editAdvanceIncomeTax"
                 android:inputType="numberSigned"
+                android:selectAllOnFocus="true"
                 />
         </TableRow>
 
@@ -342,9 +392,10 @@
                 android:id="@+id/labelAmountDue"
                 android:text="DO WYPŁATY"
                 />
-            <TextView
+            <EditText
                 android:id="@+id/editAmountDue"
                 android:inputType="numberSigned"
+                android:selectAllOnFocus="true"
                 />
         </TableRow>
 
