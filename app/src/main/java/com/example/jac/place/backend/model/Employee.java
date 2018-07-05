@@ -20,8 +20,6 @@ public class Employee {
     @ColumnInfo(name = "id_firm")
     private long firmId;
 
-    @ColumnInfo(name = "is_owner")
-    private boolean isOwner;
 
     @ColumnInfo(name = "illness_days")
     private int illnessDays;
@@ -46,14 +44,6 @@ public class Employee {
 
     public void setFirmId(long firmId) {
         this.firmId = firmId;
-    }
-
-    public boolean isOwner() {
-        return isOwner;
-    }
-
-    public void setOwner(boolean owner) {
-        isOwner = owner;
     }
 
 

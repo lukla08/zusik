@@ -55,6 +55,7 @@
                 android:id="@+id/editSalary"
                 android:hint="Podaj wynagrodzenie"
                 android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"
                 />
         </TableRow>
 
@@ -71,6 +72,7 @@
                 android:id="@+id/editSalary12M"
                 android:hint="Podaj średnią"
                 android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"
                 />
         </TableRow>
 
@@ -87,23 +89,10 @@
                 android:id="@+id/editIllness"
                 android:hint="Podaj chorobowe"
                 android:inputType="numberSigned"
+                android:selectAllOnFocus="true"
                 />
         </TableRow>
 
-
-        <TableRow
-            android:id="@+id/tableEmployeeOwner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dip" >
-            <TextView
-                android:id="@+id/labelEmployeeOwner"
-                android:text="Właściciel"
-                />
-            <CheckBox
-                android:id="@+id/checkEmployeeOwner"
-                />
-        </TableRow>
 
         <TableRow
             android:id="@+id/tableEmployeeEnabled"

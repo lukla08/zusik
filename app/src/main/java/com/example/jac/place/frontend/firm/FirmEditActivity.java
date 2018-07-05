@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.example.jac.place.R;
 import com.example.jac.place.app.tread_pool.helper.AppConst;
+import com.example.jac.place.app.utils.StringUtils;
 import com.example.jac.place.backend.SalaryDatabase;
 import com.example.jac.place.backend.model.Firm;
 
@@ -21,6 +22,7 @@ public class FirmEditActivity extends AppCompatActivity {
     private long selectedRecordId;
 
     private EditText editFirmName;
+    private EditText editAccidentRate;
     private CheckBox cFirmEnabled;
 
     @Override
@@ -35,6 +37,7 @@ public class FirmEditActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         editFirmName = findViewById(R.id.editFirmName);
+        editAccidentRate = findViewById(R.id.editAccidentRate);
         cFirmEnabled = findViewById(R.id.checkFirmEnabled);
         cFirmEnabled.setChecked(true);
 
@@ -54,6 +57,7 @@ public class FirmEditActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Firm firm) {
                 editFirmName.setText(firm.getFirmName());
+                editAccidentRate.setText(Double.toString(firm.getAccidentRate()));
                 cFirmEnabled.setChecked(firm.getDisabled() == 0);
             }
         }.execute();
@@ -62,6 +66,7 @@ public class FirmEditActivity extends AppCompatActivity {
     private void saveCurrentRecord() {
         Firm firm = new Firm();
         firm.setFirmName(editFirmName.getText().toString());
+        firm.setAccidentRate(StringUtils.toDouble(editAccidentRate.getText().toString()));
         firm.setDisabled(cFirmEnabled.isChecked()? 0 : 1);
         firm.setFirmId(selectedRecordId);
 

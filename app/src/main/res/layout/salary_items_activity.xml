@@ -101,7 +101,7 @@
                 />
             <TextView
                 android:id="@+id/editIllness"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 />
         </TableRow>
 
@@ -131,7 +131,7 @@
                 />
             <TextView
                 android:id="@+id/editCalcSalary12m"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 />
         </TableRow>
 
@@ -146,7 +146,7 @@
                 />
             <TextView
                 android:id="@+id/editIllnessDailyRate"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 />
         </TableRow>
 
@@ -161,7 +161,7 @@
                 />
             <TextView
                 android:id="@+id/editIllnessPart"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 />
         </TableRow>
 
@@ -176,7 +176,7 @@
                 />
             <TextView
                 android:id="@+id/editNormalDailyRate"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 />
         </TableRow>
 
@@ -191,7 +191,7 @@
                 />
             <TextView
                 android:id="@+id/editSalaryNormalPart"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 />
         </TableRow>
 
@@ -204,9 +204,10 @@
                 android:id="@+id/labelSalaryTotal"
                 android:text="Wynagr. razem"
                 />
-            <TextView
+            <EditText
                 android:id="@+id/editSalaryTotal"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"
                 />
         </TableRow>
 
@@ -221,7 +222,7 @@
                 />
             <TextView
                 android:id="@+id/editBase4SocialTax"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 />
         </TableRow>
 
@@ -236,7 +237,7 @@
                 />
             <EditText
                 android:id="@+id/editSocialPension"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
                 />
         </TableRow>
@@ -252,7 +253,7 @@
                 />
             <EditText
                 android:id="@+id/editSocialRent"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
                 />
         </TableRow>
@@ -268,7 +269,7 @@
                 />
             <EditText
                 android:id="@+id/editSocialIllness"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
                 />
         </TableRow>
@@ -284,7 +285,7 @@
                 />
             <TextView
                 android:id="@+id/editSocialTax"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 />
         </TableRow>
 
@@ -299,7 +300,7 @@
                 />
             <TextView
                 android:id="@+id/editBase4HealthTax"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 />
         </TableRow>
 
@@ -315,7 +316,7 @@
                 />
             <EditText
                 android:id="@+id/editHealthToTake"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
                 />
         </TableRow>
@@ -331,7 +332,7 @@
                 />
             <TextView
                 android:id="@+id/editHealthToDeduct"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 />
         </TableRow>
 
@@ -377,7 +378,7 @@
                 />
             <EditText
                 android:id="@+id/editAdvanceIncomeTax"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
                 />
         </TableRow>
@@ -394,12 +395,109 @@
                 />
             <EditText
                 android:id="@+id/editAmountDue"
-                android:inputType="numberSigned"
+                android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
                 />
         </TableRow>
 
 
+        <TableRow
+            android:id="@+id/rowBossPension"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelBossPension"
+                android:text="Pracodawca : emeryt."
+                />
+            <EditText
+                android:id="@+id/editBossPension"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowBossRent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelBossRent"
+                android:text="Pracodawca : rentowa"
+                />
+            <EditText
+                android:id="@+id/editBossRent"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"
+                />
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/rowBossAccident"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelBossAccident"
+                android:text="Pracodawca : wypadkowe"
+                />
+            <EditText
+                android:id="@+id/editBossAccident"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"
+                />
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/rowBossFP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelBossFp"
+                android:text="Pracodawca : FP"
+                />
+            <EditText
+                android:id="@+id/editBossFP"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowBossFGSP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelBossFGSP"
+                android:text="Pracodawca : FGSP"
+                />
+            <EditText
+                android:id="@+id/editBossFGSP"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"
+                />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowTotalCost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelTotalCost"
+                android:text="KOSZT PRACODAWCY"
+                />
+            <TextView
+                android:id="@+id/editTotalCost"
+                android:inputType="numberDecimal"
+                android:selectAllOnFocus="true"
+                />
+        </TableRow>
 
 
     </TableLayout>

@@ -33,7 +33,6 @@ public class EmployeeEditActivity extends AppCompatActivity {
     private EditText editSalary12m;
     private EditText editIllness;
     private CheckBox cEmployeeEnabled;
-    private CheckBox cEmployeeOwner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,6 @@ public class EmployeeEditActivity extends AppCompatActivity {
         editSalary12m = findViewById(R.id.editSalary12M);
         editIllness = findViewById(R.id.editIllness);
 
-        cEmployeeOwner = findViewById(R.id.checkEmployeeOwner);
         cEmployeeEnabled = findViewById(R.id.checkEmployeeEnabled);
         cEmployeeEnabled.setChecked(true);
 
@@ -73,7 +71,6 @@ public class EmployeeEditActivity extends AppCompatActivity {
             protected void onPostExecute(Employee emp) {
                 editFirmName.setText(emp.getName());
                 cEmployeeEnabled.setChecked(emp.getDisabled() == 0);
-                cEmployeeOwner.setChecked(emp.isOwner());
                 editSalary.setText(Double.toString(emp.getSalary()));
                 editSalary12m.setText(Double.toString(emp.getAvg12MSalary()));
                 editIllness.setText(Integer.toString(emp.getIllnessDays()));
@@ -93,7 +90,7 @@ public class EmployeeEditActivity extends AppCompatActivity {
         emp.setFirmId(selectedFirmId);
         emp.setEmployeeId(selectedRecordId);
         emp.setDisabled(cEmployeeEnabled.isChecked()? 0 : 1);
-        emp.setOwner(cEmployeeOwner.isChecked());
+
         return emp;
     }
 

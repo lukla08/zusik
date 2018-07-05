@@ -121,7 +121,6 @@ public class EmployeeListActivity extends BaseAppCompatActivity {
         emp3.setName("Pracownik 3");
         emp3.setSalary(3000);
         emp3.setAvg12MSalary(4400);
-        emp3.setOwner(true);
 
         Employee emp4 = new Employee();
         emp4.setName("Pracownik 4");

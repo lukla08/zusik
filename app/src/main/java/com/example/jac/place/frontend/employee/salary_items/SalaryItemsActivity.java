@@ -42,6 +42,13 @@ public class SalaryItemsActivity extends AppCompatActivity {
     private TextView editAdvanceIncomeTax;
     private TextView editAmountDue;
 
+    private TextView editBossPension;
+    private TextView editBossRent;
+    private TextView editBossAccident;
+    private TextView editBossFP;
+    private TextView editBossFGSP;
+    private TextView editTotalCost;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +83,13 @@ public class SalaryItemsActivity extends AppCompatActivity {
         editAdvanceIncomeTaxBrutto = findViewById(R.id.editAdvanceIncomeTaxBrutto);
         editAdvanceIncomeTax = findViewById(R.id.editAdvanceIncomeTax);
         editAmountDue = findViewById(R.id.editAmountDue);
+
+        editBossPension = findViewById(R.id.editBossPension);
+        editBossRent = findViewById(R.id.editBossRent);
+        editBossAccident = findViewById(R.id.editBossAccident);
+        editBossFP = findViewById(R.id.editBossFP);
+        editBossFGSP = findViewById(R.id.editBossFGSP);
+        editTotalCost = findViewById(R.id.editTotalCost);
 
         initializeControls();
 
@@ -114,6 +128,14 @@ public class SalaryItemsActivity extends AppCompatActivity {
                 editAdvanceIncomeTaxBrutto.setText(Double.toString(salaryItems.getCalc_advance4IncomeTaxBrutto()));
                 editAdvanceIncomeTax.setText(Long.toString(salaryItems.getCalc_advance4IncomeTax()));
                 editAmountDue.setText(Double.toString(salaryItems.getCalc_AmountDue()));
+
+                editBossPension.setText(Double.toString(salaryItems.getCalc_BossSocialPension()));
+                editBossRent.setText(Double.toString(salaryItems.getCalc_BossSocialRent()));
+                editBossAccident.setText(Double.toString(salaryItems.getCalc_BossSocialAccident()));
+                editBossFP.setText(Double.toString(salaryItems.getCalc_BossFP()));
+                editBossFGSP.setText(Double.toString(salaryItems.getCalc_BossFGSP()));
+                editTotalCost.setText(Double.toString(salaryItems.getCalc_TotalCost()));
+
             }
         }.execute();
     }

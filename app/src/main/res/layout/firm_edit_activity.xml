@@ -43,6 +43,22 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/tableRowAccidentRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip" >
+            <TextView
+                android:id="@+id/labelAccidentRate"
+                android:text="Wypadkowe %"
+                />
+            <EditText
+                android:id="@+id/editAccidentRate"
+                android:selectAllOnFocus="true"
+                android:inputType="numberDecimal"
+                />
+        </TableRow>
+
+        <TableRow
             android:id="@+id/tableRowFirmEnabled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

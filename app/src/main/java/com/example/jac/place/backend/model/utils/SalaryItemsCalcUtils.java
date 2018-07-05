@@ -14,7 +14,6 @@ public class SalaryItemsCalcUtils {
         items.setEmployeeId(employee.getEmployeeId());
         items.setEmployee_salary(employee.getSalary());
         items.setEmployee_salary12m(employee.getAvg12MSalary());
-        items.setEmployee_isOwner(employee.isOwner());
 
         items.setEmployee_illnessDays(employee.getIllnessDays());
 
@@ -101,6 +100,29 @@ public class SalaryItemsCalcUtils {
         // kwota do wyplaty
         double calcAmountDue = round2Digits(calcSalaryTotal - calcEmployeeSocialTotal - calcHealthTaxToTake - calcAdvance4IncomeTax);
         items.setCalc_AmountDue(calcAmountDue);
+
+        // wyliczona skladka pracodawcy: emerytalne
+        double calcBossSocialPension = round2Digits(calcBase4SocialTaxes * 9.76 / 100);
+        items.setCalc_BossSocialPension(calcBossSocialPension);
+
+        // wyliczona skladka pracodawcy: rentowa
+        double calcBossSocialRent = round2Digits(calcBase4SocialTaxes *  6.5 / 100);
+        items.setCalc_BossSocialRent(calcBossSocialRent);
+
+        // wyliczona skladka pracodawcy: wypadkowa
+        double calcBossSocialAccident = round2Digits(calcBase4SocialTaxes *  1.8 / 100);
+        items.setCalc_BossSocialAccident(calcBossSocialAccident);
+
+        // wyliczona skladka pracodawcy: FP
+        double calcBossFP = round2Digits(calcBase4SocialTaxes *  2.45 / 100);
+        items.setCalc_BossFP(calcBossFP);
+
+        // wyliczona skladka pracodawcy: FGSP
+        double calcBossFGSP = round2Digits(calcBase4SocialTaxes *  0.1 / 100);
+        items.setCalc_BossFGSP(calcBossFGSP);
+
+        double totalCost = round2Digits(calcSalaryTotal + calcBossSocialPension + calcBossSocialRent + calcBossSocialAccident + calcBossFGSP + calcBossFP);
+        items.setCalc_TotalCost(totalCost);
 
         return items;
     }

@@ -42,6 +42,66 @@ public class SalaryItems {
 
     private double calc_AmountDue; // kwota do wyplaty
 
+    private double calc_BossSocialPension; // emerytalna płatna przez pracodawce
+    private double calc_BossSocialRent; // rentowa płatna przez pracodawce
+    private double calc_BossSocialAccident; // wypadkowa płatna przez pracodawce
+    private double calc_BossFP; // FP płatna przez pracodawce
+    private double calc_BossFGSP; // FP płatna przez pracodawce
+
+    private double calc_TotalCost; // koszt całkowity
+
+    public double getCalc_TotalCost() {
+        return calc_TotalCost;
+    }
+
+    public void setCalc_TotalCost(double calc_TotalCost) {
+        this.calc_TotalCost = calc_TotalCost;
+    }
+
+    public void setCalc_costsOfObtaining(double calc_costsOfObtaining) {
+        this.calc_costsOfObtaining = calc_costsOfObtaining;
+    }
+
+    public double getCalc_BossSocialPension() {
+        return calc_BossSocialPension;
+    }
+
+    public void setCalc_BossSocialPension(double calc_BossSocialPension) {
+        this.calc_BossSocialPension = calc_BossSocialPension;
+    }
+
+    public double getCalc_BossSocialRent() {
+        return calc_BossSocialRent;
+    }
+
+    public void setCalc_BossSocialRent(double calc_BossSocialRent) {
+        this.calc_BossSocialRent = calc_BossSocialRent;
+    }
+
+    public double getCalc_BossSocialAccident() {
+        return calc_BossSocialAccident;
+    }
+
+    public void setCalc_BossSocialAccident(double calc_BossSocialAccident) {
+        this.calc_BossSocialAccident = calc_BossSocialAccident;
+    }
+
+    public double getCalc_BossFP() {
+        return calc_BossFP;
+    }
+
+    public void setCalc_BossFP(double calc_BossFP) {
+        this.calc_BossFP = calc_BossFP;
+    }
+
+    public double getCalc_BossFGSP() {
+        return calc_BossFGSP;
+    }
+
+    public void setCalc_BossFGSP(double calc_BossFGSP) {
+        this.calc_BossFGSP = calc_BossFGSP;
+    }
+
     public double getEmployee_salary() {
         return employee_salary;
     }

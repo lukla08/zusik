@@ -16,6 +16,9 @@ public class Firm {
     @ColumnInfo(name = "is_disabled")
     private int disabled;
 
+    @ColumnInfo(name = "accidentRate")
+    private double accidentRate;
+
     public long getFirmId() {
         return firmId;
     }
@@ -39,6 +42,14 @@ public class Firm {
 
     public void setDisabled(int disabled) {
         this.disabled = disabled;
+    }
+
+    public double getAccidentRate() {
+        return accidentRate;
+    }
+
+    public void setAccidentRate(double accidentRate) {
+        this.accidentRate = accidentRate;
     }
 
     @Override
