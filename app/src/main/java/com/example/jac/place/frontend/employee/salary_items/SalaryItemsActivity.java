@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Pair;
 import android.widget.TextView;
 
 import com.example.jac.place.R;
 import com.example.jac.place.app.tread_pool.helper.AppConst;
 import com.example.jac.place.backend.SalaryDatabase;
 import com.example.jac.place.backend.model.Employee;
+import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.backend.model.SalaryItems;
 import com.example.jac.place.backend.model.utils.SalaryItemsCalcUtils;
 
@@ -96,19 +98,29 @@ public class SalaryItemsActivity extends AppCompatActivity {
     }
 
     private void initializeControls() {
-        new AsyncTask<Void, Void, Employee>() {
-            @Override protected Employee doInBackground(Void... voids) {
-                return SalaryDatabase.getInstance(SalaryItemsActivity.this).employeeDao().getSelectedEmployee(selectedEmployeeId);
+
+        new AsyncTask<Void, Void, Pair<Employee, Firm >>() {
+            @Override protected Pair<Employee, Firm > doInBackground(Void... voids) {
+                SalaryDatabase database = SalaryDatabase.getInstance(SalaryItemsActivity.this);
+                Employee selectedEmployee = database.employeeDao().getSelectedEmployee(selectedEmployeeId);
+                Firm connectedFirm = null;
+                if (selectedEmployee != null)
+                    connectedFirm = database.firmsDao().getSelectedFirm(selectedEmployee.getFirmId());
+
+                Pair<Employee, Firm > res = new Pair<>(selectedEmployee, connectedFirm);
+                return res;
             }
 
             @Override
-            protected void onPostExecute(Employee emp) {
+            protected void onPostExecute(Pair<Employee, Firm> combinedData) {
+                Employee emp = combinedData.first;
+                Firm firm = combinedData.second;
                 editEmployeeName.setText(emp.getName());
                 editSalary.setText(Double.toString(emp.getSalary()));
                 editSalary12m.setText(Double.toString(emp.getAvg12MSalary()));
                 editIllnessDays.setText(Integer.toString(emp.getIllnessDays()));
 
-                SalaryItems salaryItems = SalaryItemsCalcUtils.prepareSalaryItems4Employee(emp);
+                SalaryItems salaryItems = SalaryItemsCalcUtils.prepareSalaryItems4Employee(emp, firm);
 
                 editCostOfObtaining.setText(Double.toString(salaryItems.getCalc_costsOfObtaining()));
                 editCalcSalary12m.setText(Double.toString(salaryItems.getCalc_salaray12m_netto()));

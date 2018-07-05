@@ -1,13 +1,14 @@
 package com.example.jac.place.backend.model.utils;
 
 import com.example.jac.place.backend.model.Employee;
+import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.backend.model.SalaryItems;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class SalaryItemsCalcUtils {
-    public static SalaryItems prepareSalaryItems4Employee(Employee employee) {
+    public static SalaryItems prepareSalaryItems4Employee(Employee employee, Firm firm) {
 
         SalaryItems items = new SalaryItems();
 
@@ -110,7 +111,11 @@ public class SalaryItemsCalcUtils {
         items.setCalc_BossSocialRent(calcBossSocialRent);
 
         // wyliczona skladka pracodawcy: wypadkowa
-        double calcBossSocialAccident = round2Digits(calcBase4SocialTaxes *  1.8 / 100);
+        double accidentRate = 1.8;
+        if (firm != null)
+            accidentRate = firm.getAccidentRate();
+
+        double calcBossSocialAccident = round2Digits(calcBase4SocialTaxes *  accidentRate / 100);
         items.setCalc_BossSocialAccident(calcBossSocialAccident);
 
         // wyliczona skladka pracodawcy: FP

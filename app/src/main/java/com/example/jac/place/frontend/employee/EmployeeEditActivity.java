@@ -96,9 +96,6 @@ public class EmployeeEditActivity extends AppCompatActivity {
 
     private void saveCurrentRecord() {
         Employee emp = getRecordPopulatedWithControls();
-        SalaryItems salaryItems = SalaryItemsCalcUtils.prepareSalaryItems4Employee(emp);
-        Log.d(AppConst.APP_TAG, "salary:" + salaryItems);
-
         new AsyncTask<Void, Void, Boolean>() {
 
             @Override
@@ -142,7 +139,6 @@ public class EmployeeEditActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private void showSalaryItems() {
         Employee emp = getRecordPopulatedWithControls();
-        SalaryItems salaryItems = SalaryItemsCalcUtils.prepareSalaryItems4Employee(emp);
 
         new AsyncTask<Void, Void, Boolean>() {
 
