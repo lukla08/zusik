@@ -1,11 +1,14 @@
 package com.example.jac.place.frontend.employee.salary_items;
 
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Pair;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.jac.place.R;
@@ -56,6 +59,8 @@ public class SalaryItemsActivity extends AppCompatActivity {
     private TextView editBossFGSP;
     private TextView editTotalCost;
 
+    private CheckBox cEditable;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,7 @@ public class SalaryItemsActivity extends AppCompatActivity {
 
         setTitle("Składniki płacowe");
 
+        cEditable = findViewById(R.id.cEditable);
         editEmployeeName = findViewById(R.id.editEmployeeName);
         editSalary = findViewById(R.id.editSalary);
         editSalary12m = findViewById(R.id.editSalary12M);
@@ -102,7 +108,26 @@ public class SalaryItemsActivity extends AppCompatActivity {
         editBossFGSP = findViewById(R.id.editBossFGSP);
         editTotalCost = findViewById(R.id.editTotalCost);
 
+        cEditable.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                updateEditability();
+            }
+        });
+
         initializeControls();
+    }
+
+    private void updateEditability() {
+        TextView editableEdits[] = {editSalaryTotal, editSocialPension, editSocialRent, editSocialIllness,
+                editHealthToTake, editAdvanceIncomeTax, editAmountDue,
+                editBossPension, editBossRent, editBossAccident,editBossFP, editBossFGSP};
+
+        boolean isEditable = cEditable.isChecked();
+        for (TextView tv : editableEdits) {
+            tv.setEnabled(isEditable);
+
+            tv.setTypeface(null, isEditable? Typeface.NORMAL :Typeface.BOLD);
+        }
 
     }
 
@@ -124,6 +149,7 @@ public class SalaryItemsActivity extends AppCompatActivity {
             protected void onPostExecute(Pair<Employee, Firm> combinedData) {
                 Employee emp = combinedData.first;
                 Firm firm = combinedData.second;
+
                 editEmployeeName.setText(emp.getName());
                 editSalary.setText(Double.toString(emp.getSalary()));
                 editSalary12m.setText(Double.toString(emp.getAvg12MSalary()));
@@ -161,6 +187,7 @@ public class SalaryItemsActivity extends AppCompatActivity {
                 editBossFGSP.setText(Double.toString(salaryItems.getCalc_BossFGSP()));
                 editTotalCost.setText(Double.toString(salaryItems.getCalc_TotalCost()));
 
+                updateEditability();
             }
         }.execute();
     }

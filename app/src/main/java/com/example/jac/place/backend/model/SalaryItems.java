@@ -11,6 +11,8 @@ public class SalaryItems {
     @ColumnInfo(name =  "id_employee")
     private long employeeId;
 
+    private int editable;
+
     private double employee_salary;
     private double employee_salary12m;
     private boolean employee_isOwner;
@@ -296,6 +298,14 @@ public class SalaryItems {
 
     public double getCalc_costsOfObtaining() {
         return calc_costsOfObtaining;
+    }
+
+    public int getEditable() {
+        return editable;
+    }
+
+    public void setEditable(int editable) {
+        this.editable = editable;
     }
 
     @Override
