@@ -34,8 +34,13 @@ public class SalaryItemsActivity extends AppCompatActivity {
     private TextView editNormalDailyRate;
     private TextView editSalaryNormalRate;
     private TextView editSalaryTotal;
+
     private TextView editBase4SocialTax;
+    private TextView editSocialPension;
+    private TextView editSocialRent;
+    private TextView editSocialIllness;
     private TextView editSocialTax;
+
     private TextView editBase4HealthTax;
     private TextView editHealthToTake;
     private TextView editHealthToDeduct;
@@ -86,6 +91,10 @@ public class SalaryItemsActivity extends AppCompatActivity {
         editAdvanceIncomeTax = findViewById(R.id.editAdvanceIncomeTax);
         editAmountDue = findViewById(R.id.editAmountDue);
 
+        editSocialPension = findViewById(R.id.editSocialPension);
+        editSocialRent = findViewById(R.id.editSocialRent);
+        editSocialIllness = findViewById(R.id.editSocialIllness);
+
         editBossPension = findViewById(R.id.editBossPension);
         editBossRent = findViewById(R.id.editBossRent);
         editBossAccident = findViewById(R.id.editBossAccident);
@@ -131,6 +140,10 @@ public class SalaryItemsActivity extends AppCompatActivity {
                 editSalaryTotal.setText(Double.toString(salaryItems.getCalc_salaryTotal()));
 
                 editBase4SocialTax.setText(Double.toString(salaryItems.getCalc_base4SocialTaxes()));
+                editSocialIllness.setText(Double.toString(salaryItems.getCalc_employeeSocialIllness()));
+                editSocialPension.setText(Double.toString(salaryItems.getCalc_employeeSocialPension()));
+                editSocialRent.setText(Double.toString(salaryItems.getCalc_employeeSocialRent()));
+
                 editSocialTax.setText(Double.toString(salaryItems.getCalc_employeeSocialTotal()));
 
                 editBase4HealthTax.setText(Double.toString(salaryItems.getCalc_base4healthTax()));
