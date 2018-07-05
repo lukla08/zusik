@@ -21,6 +21,9 @@ public class SalaryItemsCalcUtils {
         //	http://www.wskazniki.gofin.pl/8,223,2,przykladowe-obliczenie-wynagrodzenia-netto.html
         //	http://meritumbiuro.com.pl/jak-obliczyc-wynagrodzenie-chorobowe/
 
+        // Szczegoly dotyczace skladek przy niskim wynagrodzeniu :
+        //  https://www.kadrywpraktyce.pl/liczyc-zaliczke-podatek-dochodowy-przy-niskim-wynagrodzeniu-pracownika/
+
         // przecietne wynagrodzenie za ostatnie 12 mies bez skladek
         double calcSalary12mNetto = round2Digits(items.getEmployee_salary12m() * (1 - 0.1371));
         items.setCalc_salaray12m_netto(calcSalary12mNetto);
@@ -74,14 +77,6 @@ public class SalaryItemsCalcUtils {
         double calcBase4healthTax = round2Digits(calcSalaryTotal - calcEmployeeSocialTotal);
         items.setCalc_base4healthTax(calcBase4healthTax );
 
-        // skladka zdrowotna do pobrania
-        double calcHealthTaxToTake = round2Digits(calcBase4healthTax * 0.09);
-        items.setCalc_healthTaxToTake(calcHealthTaxToTake);
-
-        // skladka zdrowotna do odliczenia
-        double calcHealthTaxToDeduct = round2Digits(calcBase4healthTax * 0.0775);
-        items.setCalc_healthTaxToDeduct(calcHealthTaxToDeduct);
-
         // podstawa opodatkowania
         long calcBase4IncomeTax = round2Long(calcSalaryTotal - items.getCalc_costsOfObtaining() - calcEmployeeSocialTotal);
         items.setCalc_base4IncomeTax(calcBase4IncomeTax );
@@ -89,6 +84,15 @@ public class SalaryItemsCalcUtils {
         // zaliczka na dochodowy brutto
         double calcAdvance4IncomeTaxBrutto = Math.max((calcBase4IncomeTax * 0.18) - 46.33, 0);
         items.setCalc_advance4IncomeTaxBrutto(calcAdvance4IncomeTaxBrutto);
+
+        // skladka zdrowotna do pobrania
+        double calcHealthTaxToTake = Math.min(round2Digits(calcBase4healthTax * 0.09), calcAdvance4IncomeTaxBrutto);
+        items.setCalc_healthTaxToTake(calcHealthTaxToTake);
+
+        // skladka zdrowotna do odliczenia
+        double calcHealthTaxToDeduct = Math.min(round2Digits(calcBase4healthTax * 0.0775), calcAdvance4IncomeTaxBrutto);
+        items.setCalc_healthTaxToDeduct(calcHealthTaxToDeduct);
+
 
         // zaliczka na dochodowy
         long calcAdvance4IncomeTax = round2Long(Math.max((calcAdvance4IncomeTaxBrutto - calcHealthTaxToDeduct), 0));
