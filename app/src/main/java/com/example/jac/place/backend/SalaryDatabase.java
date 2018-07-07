@@ -7,14 +7,17 @@ import android.content.Context;
 
 import com.example.jac.place.backend.dao.EmployeeDao;
 import com.example.jac.place.backend.dao.FirmsDao;
+import com.example.jac.place.backend.dao.SalaryItemsDao;
 import com.example.jac.place.backend.dao.SettingsDao;
 import com.example.jac.place.backend.model.Employee;
 import com.example.jac.place.backend.model.Firm;
+import com.example.jac.place.backend.model.SalaryItems;
 import com.example.jac.place.backend.model.Settings;
 
-@Database(entities = {Settings.class, Employee.class, Firm.class}, version = 1, exportSchema = false)
+@Database(entities = {Settings.class, Employee.class, Firm.class, SalaryItems.class},
+        version = 1, exportSchema = false)
 public abstract class SalaryDatabase extends RoomDatabase {
-    private static final String DATABASE_NAME = "place12.gdb";
+    private static final String DATABASE_NAME = "place13.gdb";
     private static volatile SalaryDatabase instance;
 
     public static synchronized SalaryDatabase getInstance(Context context) {
@@ -33,4 +36,5 @@ public abstract class SalaryDatabase extends RoomDatabase {
     public abstract SettingsDao settingsDao();
     public abstract FirmsDao firmsDao();
     public abstract EmployeeDao employeeDao();
+    public abstract SalaryItemsDao salaryItemsDao();
 }

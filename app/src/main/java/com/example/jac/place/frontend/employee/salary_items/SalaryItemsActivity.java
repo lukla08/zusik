@@ -7,12 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.jac.place.R;
 import com.example.jac.place.app.tread_pool.helper.AppConst;
+import com.example.jac.place.app.utils.StringUtils;
 import com.example.jac.place.backend.SalaryDatabase;
 import com.example.jac.place.backend.model.Employee;
 import com.example.jac.place.backend.model.Firm;
@@ -24,6 +27,7 @@ public class SalaryItemsActivity extends AppCompatActivity {
     public static String EXTRA_KEY_SELECTED_EMPLOYEE_ID = "selected_employee_id";
 
     private long selectedEmployeeId;
+    private Employee selectedEmployee;
 
     private TextView editEmployeeName;
     private TextView editSalary;
@@ -117,6 +121,83 @@ public class SalaryItemsActivity extends AppCompatActivity {
         initializeControls();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_firm_salary, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.action_save :
+                saveCurrentSalary();
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveCurrentSalary() {
+        new AsyncTask<Void, Void, Boolean>() {
+
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                SalaryDatabase.getInstance(SalaryItemsActivity.this).salaryItemsDao().insertOrUpdate(getRecordPopulatedWithControls());
+                return true;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                SalaryItemsActivity.this.finish();
+            }
+        }.execute();
+
+    }
+
+    SalaryItems getRecordPopulatedWithControls() {
+        SalaryItems salaryItems = new SalaryItems();
+        salaryItems.setEmployeeId(selectedEmployeeId);
+        salaryItems.setEditable(cEditable.isChecked()? 1:0);
+
+        salaryItems.setEmployee_salary(selectedEmployee.getSalary());
+        salaryItems.setEmployee_salary12m(selectedEmployee.getAvg12MSalary());
+        salaryItems.setEmployee_illnessDays(selectedEmployee.getIllnessDays());
+
+        salaryItems.setCalc_costsOfObtaining(StringUtils.toDouble(editCostOfObtaining));
+        salaryItems.setCalc_salaray12m_netto(StringUtils.toDouble(editCalcSalary12m));
+        salaryItems.setCalc_ilnessDailyRate(StringUtils.toDouble(editIllnessDailyRate));
+        salaryItems.setCalc_salaryIllnessPart(StringUtils.toDouble(editIllnessPart));
+        salaryItems.setCalc_normalDailyRate(StringUtils.toDouble(editNormalDailyRate));;
+        salaryItems.setCalc_salaryNormalPart(StringUtils.toDouble(editSalaryNormalRate));;
+        salaryItems.setCalc_salaryTotal(StringUtils.toDouble(editSalaryTotal));;
+
+        salaryItems.setCalc_base4SocialTaxes(StringUtils.toDouble(editBase4SocialTax));;
+        salaryItems.setCalc_employeeSocialIllness(StringUtils.toDouble(editSocialIllness));;
+        salaryItems.setCalc_employeeSocialPension(StringUtils.toDouble(editSocialPension));;
+        salaryItems.setCalc_employeeSocialRent(StringUtils.toDouble(editSocialRent));;
+        salaryItems.setCalc_employeeSocialTotal(StringUtils.toDouble(editSocialTax));;
+
+        salaryItems.setCalc_base4healthTax(StringUtils.toDouble(editBase4HealthTax));;
+        salaryItems.setCalc_healthTaxToTake(StringUtils.toDouble(editHealthToTake));;
+        salaryItems.setCalc_healthTaxToDeduct(StringUtils.toDouble(editHealthToDeduct));;
+        salaryItems.setCalc_base4IncomeTax(StringUtils.toLong(editBaseIncomeTax));;
+        salaryItems.setCalc_advance4IncomeTaxBrutto(StringUtils.toLong(editAdvanceIncomeTaxBrutto));;
+        salaryItems.setCalc_advance4IncomeTax(StringUtils.toLong(editAdvanceIncomeTax));;
+        salaryItems.setCalc_AmountDue(StringUtils.toLong(editAmountDue));;
+
+        salaryItems.setCalc_BossSocialPension(StringUtils.toDouble(editBossPension));;
+        salaryItems.setCalc_BossSocialRent(StringUtils.toDouble(editBossRent));
+        salaryItems.setCalc_BossSocialAccident(StringUtils.toDouble(editBossAccident));
+        salaryItems.setCalc_BossFP(StringUtils.toDouble(editBossFP));
+        salaryItems.setCalc_BossFGSP(StringUtils.toDouble(editBossFGSP));
+
+        salaryItems.setCalc_TotalCost(StringUtils.toDouble(editTotalCost));
+
+        return salaryItems;
+    }
     private void updateEditability() {
         TextView editableEdits[] = {editSalaryTotal, editSocialPension, editSocialRent, editSocialIllness,
                 editHealthToTake, editAdvanceIncomeTax, editAmountDue,
@@ -131,31 +212,48 @@ public class SalaryItemsActivity extends AppCompatActivity {
 
     }
 
+    class SalaryObjects {
+        final Employee employee;
+        final Firm firm;
+        final SalaryItems salaryItems;
+
+        public SalaryObjects(Employee employee, Firm firm, SalaryItems salaryItems) {
+            this.employee = employee;
+            this.firm = firm;
+            this.salaryItems = salaryItems;
+        }
+    }
+
     private void initializeControls() {
 
-        new AsyncTask<Void, Void, Pair<Employee, Firm >>() {
-            @Override protected Pair<Employee, Firm > doInBackground(Void... voids) {
+        new AsyncTask<Void, Void, SalaryObjects>() {
+            @Override protected SalaryObjects doInBackground(Void... voids) {
                 SalaryDatabase database = SalaryDatabase.getInstance(SalaryItemsActivity.this);
+
                 Employee selectedEmployee = database.employeeDao().getSelectedEmployee(selectedEmployeeId);
                 Firm connectedFirm = null;
                 if (selectedEmployee != null)
                     connectedFirm = database.firmsDao().getSelectedFirm(selectedEmployee.getFirmId());
 
-                Pair<Employee, Firm > res = new Pair<>(selectedEmployee, connectedFirm);
-                return res;
+                SalaryItems salaryItems = database.salaryItemsDao().getSalaryItems4Employee(selectedEmployeeId);
+                if (salaryItems == null) {
+                    salaryItems = SalaryItemsCalcUtils.prepareSalaryItems4Employee(selectedEmployee, connectedFirm);
+                    database.salaryItemsDao().insertOrUpdate(salaryItems);
+                }
+
+                SalaryItemsActivity.this.selectedEmployee = selectedEmployee;
+                return new SalaryObjects(selectedEmployee, connectedFirm, salaryItems);
             }
 
             @Override
-            protected void onPostExecute(Pair<Employee, Firm> combinedData) {
-                Employee emp = combinedData.first;
-                Firm firm = combinedData.second;
+            protected void onPostExecute(SalaryObjects salaryObjects) {
+                Employee emp = salaryObjects.employee;
+                SalaryItems salaryItems = salaryObjects.salaryItems;
 
                 editEmployeeName.setText(emp.getName());
                 editSalary.setText(Double.toString(emp.getSalary()));
                 editSalary12m.setText(Double.toString(emp.getAvg12MSalary()));
                 editIllnessDays.setText(Integer.toString(emp.getIllnessDays()));
-
-                SalaryItems salaryItems = SalaryItemsCalcUtils.prepareSalaryItems4Employee(emp, firm);
 
                 editCostOfObtaining.setText(Double.toString(salaryItems.getCalc_costsOfObtaining()));
                 editCalcSalary12m.setText(Double.toString(salaryItems.getCalc_salaray12m_netto()));
@@ -186,6 +284,8 @@ public class SalaryItemsActivity extends AppCompatActivity {
                 editBossFP.setText(Double.toString(salaryItems.getCalc_BossFP()));
                 editBossFGSP.setText(Double.toString(salaryItems.getCalc_BossFGSP()));
                 editTotalCost.setText(Double.toString(salaryItems.getCalc_TotalCost()));
+
+                cEditable.setChecked(salaryItems.getEditable() == 1);
 
                 updateEditability();
             }

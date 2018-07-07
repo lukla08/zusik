@@ -117,7 +117,7 @@ public class EmployeeEditActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_firm_edit, menu);
+        getMenuInflater().inflate(R.menu.menu_firm_employee, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
