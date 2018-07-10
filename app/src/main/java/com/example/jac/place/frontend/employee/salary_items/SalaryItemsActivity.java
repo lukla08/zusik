@@ -145,7 +145,13 @@ public class SalaryItemsActivity extends AppCompatActivity {
 
             @Override
             protected Boolean doInBackground(Void... voids) {
-                SalaryDatabase.getInstance(SalaryItemsActivity.this).salaryItemsDao().insertOrUpdate(getRecordPopulatedWithControls());
+                SalaryDatabase salaryDatabase = SalaryDatabase.getInstance(SalaryItemsActivity.this);
+                SalaryItems storedSalary = getRecordPopulatedWithControls();
+                if (storedSalary.getEditable() == 0) {
+                    Firm selectedFirm = salaryDatabase.firmsDao().getSelectedFirm(selectedEmployee.getFirmId());
+                    storedSalary = SalaryItemsCalcUtils.prepareSalaryItems4Employee(selectedEmployee, selectedFirm);
+                }
+                salaryDatabase.salaryItemsDao().insertOrUpdate(storedSalary);
                 return true;
             }
 
