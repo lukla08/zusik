@@ -17,6 +17,7 @@ import com.example.jac.place.app.tread_pool.helper.AppConst;
 import com.example.jac.place.app.utils.StringUtils;
 import com.example.jac.place.backend.SalaryDatabase;
 import com.example.jac.place.backend.model.Employee;
+import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.backend.model.SalaryItems;
 import com.example.jac.place.backend.model.utils.SalaryItemsCalcUtils;
 import com.example.jac.place.frontend.employee.salary_items.SalaryItemsActivity;
@@ -95,12 +96,12 @@ public class EmployeeEditActivity extends AppCompatActivity {
     }
 
     private void saveCurrentRecord() {
-        Employee emp = getRecordPopulatedWithControls();
+
         new AsyncTask<Void, Void, Boolean>() {
 
             @Override
             protected Boolean doInBackground(Void... voids) {
-                SalaryDatabase.getInstance(EmployeeEditActivity.this).employeeDao().insertOrUpdate(emp);
+                storeEmployee();
                 return true;
             }
 
@@ -109,6 +110,18 @@ public class EmployeeEditActivity extends AppCompatActivity {
                 EmployeeEditActivity.this.finish();
             }
         }.execute();
+    }
+
+    private void storeEmployee() {
+        Employee emp = getRecordPopulatedWithControls();
+        SalaryDatabase salaryDatabase = SalaryDatabase.getInstance(EmployeeEditActivity.this);
+        salaryDatabase.employeeDao().insertOrUpdate(emp);
+        SalaryItems salaryItems = salaryDatabase.salaryItemsDao().getSalaryItems4Employee(emp.getEmployeeId());
+        if (salaryItems == null || salaryItems.getEditable() == 0) {
+            Firm selectedFirm = salaryDatabase.firmsDao().getSelectedFirm(emp.getFirmId());
+            salaryItems = SalaryItemsCalcUtils.prepareSalaryItems4Employee(emp, selectedFirm);
+            salaryDatabase.salaryItemsDao().insertOrUpdate(salaryItems);
+        }
     }
 
     private boolean isInsertMode() {
@@ -144,6 +157,7 @@ public class EmployeeEditActivity extends AppCompatActivity {
 
             @Override
             protected Boolean doInBackground(Void... voids) {
+                storeEmployee();
                 SalaryDatabase.getInstance(EmployeeEditActivity.this).employeeDao().insertOrUpdate(emp);
                 return true;
             }

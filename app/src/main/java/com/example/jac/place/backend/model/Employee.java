@@ -89,6 +89,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return name;
+        return name + " -> " + Double.toString(salary);
     }
 }

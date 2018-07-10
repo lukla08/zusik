@@ -1,5 +1,6 @@
 package com.example.jac.place.backend.model.utils;
 
+import com.example.jac.place.app.utils.DoubleUtils;
 import com.example.jac.place.backend.model.Employee;
 import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.backend.model.SalaryItems;
@@ -25,19 +26,19 @@ public class SalaryItemsCalcUtils {
         //  https://www.kadrywpraktyce.pl/liczyc-zaliczke-podatek-dochodowy-przy-niskim-wynagrodzeniu-pracownika/
 
         // przecietne wynagrodzenie za ostatnie 12 mies bez skladek
-        double calcSalary12mNetto = round2Digits(items.getEmployee_salary12m() * (1 - 0.1371));
+        double calcSalary12mNetto = DoubleUtils.round2Digits(items.getEmployee_salary12m() * (1 - 0.1371));
         items.setCalc_salaray12m_netto(calcSalary12mNetto);
 
         // dzienna stawka chorobowa
-        double calcIllnessDailyRate = round2Digits((calcSalary12mNetto * 0.8)  / 30);
+        double calcIllnessDailyRate = DoubleUtils.round2Digits((calcSalary12mNetto * 0.8)  / 30);
         items.setCalc_ilnessDailyRate(calcIllnessDailyRate);
 
         // wynagrodzenie za czas choroby
-        double calcSalaryIllnessPart = round2Digits(calcIllnessDailyRate * items.getEmployee_illnessDays());
+        double calcSalaryIllnessPart = DoubleUtils.round2Digits(calcIllnessDailyRate * items.getEmployee_illnessDays());
         items.setCalc_salaryIllnessPart(calcSalaryIllnessPart);
 
         // dzienna stawka przepracowane
-        double calcNormalDailyRate = round2Digits(items.getEmployee_salary() / 30);
+        double calcNormalDailyRate = DoubleUtils.round2Digits(items.getEmployee_salary() / 30);
         items.setCalc_normalDailyRate(calcNormalDailyRate);
 
         // normalne wynagrodzenie przypadające w okresie choroby
@@ -45,11 +46,11 @@ public class SalaryItemsCalcUtils {
         items.setCalc_salaryNormalOnIllness(calcSalaryNormalOnIllness);
 
         // wynagrodzenie za przepracowany czas
-        double calcSalaryNormalPart = round2Digits(items.getEmployee_salary() - calcSalaryNormalOnIllness);
+        double calcSalaryNormalPart = DoubleUtils.round2Digits(items.getEmployee_salary() - calcSalaryNormalOnIllness);
         items.setCalc_salaryNormalPart(calcSalaryNormalPart);
 
         // całkowite wynagrodzenie
-        double calcSalaryTotal = round2Digits(calcSalaryIllnessPart + calcSalaryNormalPart);
+        double calcSalaryTotal = DoubleUtils.round2Digits(calcSalaryIllnessPart + calcSalaryNormalPart);
         items.setCalc_salaryTotal(calcSalaryTotal);
 
         // podstawa na spoleczne
@@ -57,57 +58,57 @@ public class SalaryItemsCalcUtils {
         items.setCalc_base4SocialTaxes(calcBase4SocialTaxes);
 
         // wyliczona skladka pracowonika: emerytalne
-        double calcEmployeeSocialPension = round2Digits(calcBase4SocialTaxes * 9.76 / 100);
+        double calcEmployeeSocialPension = DoubleUtils.round2Digits(calcBase4SocialTaxes * 9.76 / 100);
         items.setCalc_employeeSocialPension(calcEmployeeSocialPension);
 
         // wyliczona skladka pracowonika: rentowe
-        double calcEmployeeSocialRent = round2Digits(calcBase4SocialTaxes * 1.5 / 100);
+        double calcEmployeeSocialRent = DoubleUtils.round2Digits(calcBase4SocialTaxes * 1.5 / 100);
         items.setCalc_employeeSocialRent(calcEmployeeSocialRent );
 
         // wyliczona skladka pracowonika: chorobowe
-        double calcEmployeeSocialIllness = round2Digits(calcBase4SocialTaxes * 2.45 / 100);
+        double calcEmployeeSocialIllness = DoubleUtils.round2Digits(calcBase4SocialTaxes * 2.45 / 100);
         items.setCalc_employeeSocialIllness(calcEmployeeSocialIllness);
 
         // suma skladek spolecznych pracownika
         double calcEmployeeSocialTotal =
-                round2Digits(calcEmployeeSocialPension + calcEmployeeSocialRent + calcEmployeeSocialIllness);
+                DoubleUtils.round2Digits(calcEmployeeSocialPension + calcEmployeeSocialRent + calcEmployeeSocialIllness);
         items.setCalc_employeeSocialTotal(calcEmployeeSocialTotal);
 
         // podstawa  na ubezpieczenie zdrowotne
-        double calcBase4healthTax = round2Digits(calcSalaryTotal - calcEmployeeSocialTotal);
+        double calcBase4healthTax = DoubleUtils.round2Digits(calcSalaryTotal - calcEmployeeSocialTotal);
         items.setCalc_base4healthTax(calcBase4healthTax );
 
         // podstawa opodatkowania
-        long calcBase4IncomeTax = round2Long(calcSalaryTotal - items.getCalc_costsOfObtaining() - calcEmployeeSocialTotal);
+        long calcBase4IncomeTax = DoubleUtils.round2Long(calcSalaryTotal - items.getCalc_costsOfObtaining() - calcEmployeeSocialTotal);
         items.setCalc_base4IncomeTax(calcBase4IncomeTax );
 
         // zaliczka na dochodowy brutto
-        double calcAdvance4IncomeTaxBrutto = round2Digits(Math.max((calcBase4IncomeTax * 0.18) - 46.33, 0));
+        double calcAdvance4IncomeTaxBrutto = DoubleUtils.round2Digits(Math.max((calcBase4IncomeTax * 0.18) - 46.33, 0));
         items.setCalc_advance4IncomeTaxBrutto(calcAdvance4IncomeTaxBrutto);
 
         // skladka zdrowotna do pobrania
-        double calcHealthTaxToTake = Math.min(round2Digits(calcBase4healthTax * 0.09), calcAdvance4IncomeTaxBrutto);
+        double calcHealthTaxToTake = Math.min(DoubleUtils.round2Digits(calcBase4healthTax * 0.09), calcAdvance4IncomeTaxBrutto);
         items.setCalc_healthTaxToTake(calcHealthTaxToTake);
 
         // skladka zdrowotna do odliczenia
-        double calcHealthTaxToDeduct = Math.min(round2Digits(calcBase4healthTax * 0.0775), calcAdvance4IncomeTaxBrutto);
+        double calcHealthTaxToDeduct = Math.min(DoubleUtils.round2Digits(calcBase4healthTax * 0.0775), calcAdvance4IncomeTaxBrutto);
         items.setCalc_healthTaxToDeduct(calcHealthTaxToDeduct);
 
 
         // zaliczka na dochodowy
-        long calcAdvance4IncomeTax = round2Long(Math.max((calcAdvance4IncomeTaxBrutto - calcHealthTaxToDeduct), 0));
+        long calcAdvance4IncomeTax = DoubleUtils.round2Long(Math.max((calcAdvance4IncomeTaxBrutto - calcHealthTaxToDeduct), 0));
         items.setCalc_advance4IncomeTax(calcAdvance4IncomeTax);
 
         // kwota do wyplaty
-        double calcAmountDue = round2Digits(calcSalaryTotal - calcEmployeeSocialTotal - calcHealthTaxToTake - calcAdvance4IncomeTax);
+        double calcAmountDue = DoubleUtils.round2Digits(calcSalaryTotal - calcEmployeeSocialTotal - calcHealthTaxToTake - calcAdvance4IncomeTax);
         items.setCalc_AmountDue(calcAmountDue);
 
         // wyliczona skladka pracodawcy: emerytalne
-        double calcBossSocialPension = round2Digits(calcBase4SocialTaxes * 9.76 / 100);
+        double calcBossSocialPension = DoubleUtils.round2Digits(calcBase4SocialTaxes * 9.76 / 100);
         items.setCalc_BossSocialPension(calcBossSocialPension);
 
         // wyliczona skladka pracodawcy: rentowa
-        double calcBossSocialRent = round2Digits(calcBase4SocialTaxes *  6.5 / 100);
+        double calcBossSocialRent = DoubleUtils.round2Digits(calcBase4SocialTaxes *  6.5 / 100);
         items.setCalc_BossSocialRent(calcBossSocialRent);
 
         // wyliczona skladka pracodawcy: wypadkowa
@@ -115,44 +116,23 @@ public class SalaryItemsCalcUtils {
         if (firm != null)
             accidentRate = firm.getAccidentRate();
 
-        double calcBossSocialAccident = round2Digits(calcBase4SocialTaxes *  accidentRate / 100);
+        double calcBossSocialAccident = DoubleUtils.round2Digits(calcBase4SocialTaxes *  accidentRate / 100);
         items.setCalc_BossSocialAccident(calcBossSocialAccident);
 
         // wyliczona skladka pracodawcy: FP
-        double calcBossFP = round2Digits(calcBase4SocialTaxes *  2.45 / 100);
+        double calcBossFP = DoubleUtils.round2Digits(calcBase4SocialTaxes *  2.45 / 100);
         items.setCalc_BossFP(calcBossFP);
 
         // wyliczona skladka pracodawcy: FGSP
-        double calcBossFGSP = round2Digits(calcBase4SocialTaxes *  0.1 / 100);
+        double calcBossFGSP = DoubleUtils.round2Digits(calcBase4SocialTaxes *  0.1 / 100);
         items.setCalc_BossFGSP(calcBossFGSP);
 
-        double totalCost = round2Digits(calcSalaryTotal + calcBossSocialPension + calcBossSocialRent + calcBossSocialAccident + calcBossFGSP + calcBossFP);
+        double totalCost = DoubleUtils.round2Digits(calcSalaryTotal + calcBossSocialPension + calcBossSocialRent + calcBossSocialAccident + calcBossFGSP + calcBossFP);
         items.setCalc_TotalCost(totalCost);
 
         return items;
     }
 
-    public static final double DELTA_2_DIGITS = 0.0001d;
-    private static double round2Digits(double v) {
-        BigDecimal bd;
-        if(isPositive(v))
-            bd = new BigDecimal(v+DELTA_2_DIGITS).setScale(2, RoundingMode.HALF_UP);
-        else
-            bd = new BigDecimal(v-DELTA_2_DIGITS).setScale(2, RoundingMode.HALF_UP);
-        return bd.doubleValue();
-    }
-
-    public static boolean isPositive(double value) {
-        return BigDecimal.valueOf(value).compareTo(BigDecimal.ZERO) > 0;
-    }
-
-
-    private static long round2Long(double v) {
-        if (v > 0)
-            return Math.round(v + 0.00001);
-
-        return Math.round(v - 0.00001);
-    }
 
 
 };

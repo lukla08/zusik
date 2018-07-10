@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.jac.place.R;
 import com.example.jac.place.app.tread_pool.helper.AppConst;
+import com.example.jac.place.app.utils.DoubleUtils;
 import com.example.jac.place.app.utils.StringUtils;
 import com.example.jac.place.backend.SalaryDatabase;
 import com.example.jac.place.backend.model.Employee;
@@ -92,7 +95,7 @@ public class SalaryItemsActivity extends AppCompatActivity {
         editSalaryNormalRate = findViewById(R.id.editSalaryNormalPart);
         editSalaryTotal = findViewById(R.id.editSalaryTotal);
         editBase4SocialTax = findViewById(R.id.editBase4SocialTax);
-        editSocialTax = findViewById(R.id.editSocialTax);
+
         editBase4HealthTax = findViewById(R.id.editBase4HealthTax);
         editHealthToTake = findViewById(R.id.editHealthToTake);
         editHealthToDeduct = findViewById(R.id.editHealthToDeduct);
@@ -104,6 +107,20 @@ public class SalaryItemsActivity extends AppCompatActivity {
         editSocialPension = findViewById(R.id.editSocialPension);
         editSocialRent = findViewById(R.id.editSocialRent);
         editSocialIllness = findViewById(R.id.editSocialIllness);
+        editSocialTax = findViewById(R.id.editSocialTax);
+
+         TextWatcher socialPartTextWatcher = new TextWatcher() {
+             @Override  public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+             @Override  public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+             @Override  public void afterTextChanged(Editable editable) {
+                double total = StringUtils.toDouble(editSocialPension) + StringUtils.toDouble(editSocialRent) + StringUtils.toDouble(editSocialIllness);
+                editSocialTax.setText(Double.toString(total));
+             }
+         };
+
+        editSocialPension.addTextChangedListener(socialPartTextWatcher);
+        editSocialRent.addTextChangedListener(socialPartTextWatcher);
+        editSocialIllness.addTextChangedListener(socialPartTextWatcher);
 
         editBossPension = findViewById(R.id.editBossPension);
         editBossRent = findViewById(R.id.editBossRent);
@@ -111,6 +128,24 @@ public class SalaryItemsActivity extends AppCompatActivity {
         editBossFP = findViewById(R.id.editBossFP);
         editBossFGSP = findViewById(R.id.editBossFGSP);
         editTotalCost = findViewById(R.id.editTotalCost);
+
+        TextWatcher bossPartTextWatcher = new TextWatcher() {
+            @Override  public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override  public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override  public void afterTextChanged(Editable editable) {
+                double total = StringUtils.toDouble(editBossPension)
+                        + StringUtils.toDouble(editBossRent) + StringUtils.toDouble(editBossAccident)
+                        + StringUtils.toDouble(editBossFP) + StringUtils.toDouble(editBossFGSP)
+                        + StringUtils.toDouble(editAmountDue);
+                editTotalCost.setText(Double.toString(total));
+            }
+        };
+        editBossPension.addTextChangedListener(bossPartTextWatcher);
+        editBossRent.addTextChangedListener(bossPartTextWatcher);
+        editBossAccident.addTextChangedListener(bossPartTextWatcher);
+        editBossFP.addTextChangedListener(bossPartTextWatcher);
+        editBossFGSP.addTextChangedListener(bossPartTextWatcher);
+        editAmountDue.addTextChangedListener(bossPartTextWatcher);
 
         cEditable.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
