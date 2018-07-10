@@ -82,7 +82,7 @@ public class SalaryItemsCalcUtils {
         items.setCalc_base4IncomeTax(calcBase4IncomeTax );
 
         // zaliczka na dochodowy brutto
-        double calcAdvance4IncomeTaxBrutto = Math.max((calcBase4IncomeTax * 0.18) - 46.33, 0);
+        double calcAdvance4IncomeTaxBrutto = round2Digits(Math.max((calcBase4IncomeTax * 0.18) - 46.33, 0));
         items.setCalc_advance4IncomeTaxBrutto(calcAdvance4IncomeTaxBrutto);
 
         // skladka zdrowotna do pobrania
