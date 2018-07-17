@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -89,12 +90,16 @@ public class FirmListActivity extends BaseAppCompatActivity {
 
     }
 
+
+
     private void prepareSampleFirms() {
         Firm sample1= new Firm();
         sample1.setFirmName("FIRMA A");
+        sample1.setAccidentRate(2.45);
 
         Firm sample2 = new Firm();
         sample2.setFirmName("FIRMA B");
+        sample2.setAccidentRate(2.45);
 
         getBackgroundExecutor().execute(db -> {
             db.firmsDao().insertOrUpdate(sample1, sample2);

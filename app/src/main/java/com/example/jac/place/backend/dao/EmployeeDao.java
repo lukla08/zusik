@@ -19,6 +19,9 @@ public interface EmployeeDao {
     @Query("select * from employee where id_firm = :idFirm order by name")
     LiveData<List<Employee>> getEmployeesByFirmLiveData(long idFirm);
 
+    @Query("select * from employee where id_firm = :idFirm and is_disabled = 0 order by name")
+    List<Employee> getActiveEmployeesByFirm(long idFirm);
+
     @Query("Select count(*) from employee order by name")
     int getRecordCount();
 
@@ -28,10 +31,10 @@ public interface EmployeeDao {
     @Query("select * from employee where id_employee = :id")
     Employee getSelectedEmployee(long id);
 
-    @Query("select * from employee where id_firm =:idFirm and name > :currentName order by name limit 1")
-    Employee getNextEmployee(long idFirm, String currentName);
+    @Query("select * from employee where id_firm =:idFirm and name > :currentName and is_disabled = 0 order by name limit 1")
+    Employee getNextActiveEmployee(long idFirm, String currentName);
 
-    @Query("select * from employee where id_firm =:idFirm and name < :currentName order by name desc limit 1")
-    Employee getPrevEmployee(long idFirm, String currentName);
+    @Query("select * from employee where id_firm =:idFirm and name < :currentName and is_disabled = 0 order by name desc limit 1")
+    Employee getPrevActiveEmployee(long idFirm, String currentName);
 
 }

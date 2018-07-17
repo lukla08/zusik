@@ -3,6 +3,7 @@ package com.example.jac.place.frontend.employee.salary_items;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -22,6 +23,9 @@ import com.example.jac.place.backend.model.Employee;
 import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.backend.model.SalaryItems;
 import com.example.jac.place.backend.model.utils.SalaryItemsCalcUtils;
+
+import java.io.File;
+import java.io.IOException;
 
 public class SalaryItemsActivity extends AppCompatActivity {
 
@@ -189,9 +193,9 @@ public class SalaryItemsActivity extends AppCompatActivity {
                 SalaryDatabase salaryDatabase = SalaryDatabase.getInstance(SalaryItemsActivity.this);
                 Employee nextEmployee = null;
                 if (isSelectNext)
-                    return salaryDatabase.employeeDao().getNextEmployee(selectedEmployee.getFirmId(), selectedEmployee.getName());
+                    return salaryDatabase.employeeDao().getNextActiveEmployee(selectedEmployee.getFirmId(), selectedEmployee.getName());
                 else
-                    return salaryDatabase.employeeDao().getPrevEmployee(selectedEmployee.getFirmId(), selectedEmployee.getName());
+                    return salaryDatabase.employeeDao().getPrevActiveEmployee(selectedEmployee.getFirmId(), selectedEmployee.getName());
             }
 
             @Override

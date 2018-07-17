@@ -5,12 +5,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +23,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.jac.place.R;
+import com.example.jac.place.app.tread_pool.helper.AppConst;
+import com.example.jac.place.app.utils.HtmlGenerator;
 import com.example.jac.place.backend.model.Employee;
 import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.frontend.base.BaseAppCompatActivity;
@@ -103,6 +109,40 @@ public class EmployeeListActivity extends BaseAppCompatActivity {
 
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_employee_list, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.action_send :
+                new AsyncTask<Void, Void, Void >() {
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        prepareAndSendFiles();
+                        return null;
+                    }
+                }.execute();
+
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void prepareAndSendFiles() {
+        try {
+            new HtmlGenerator().generateHtmls(this, selectedFirmId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(AppConst.APP_TAG, e.getMessage());
+        }
     }
 
     private void prepareSampleEmployees() {
