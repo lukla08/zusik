@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+</style>
+    </head>
+    <body>
+        <p>
+        <table style="width:100%">
+            <tr>
+                <th>Pracownik</th>
+                <th>Wynagr. brutto</th>
+                <th>Do wypłaty</th>
+                <th>Pracownik ub. społ. RAZEM</th>
+                <th>Pracownik emerytalne </th>
+                <th>Pracownik rentowe</th>
+                <th>Pracownik chorobowe </th>
+                <th>Zdrowotne podstawa </th>
+                <th>Zdrowotne pobrana </th>
+                <th>Zdrowotne odliczona </th>
+                <th>Dochodowy zaliczka</th>
+                <th>Pracodawca emerytalna</th>
+                <th>Pracodawca rentowa</th>
+                <th>Pracodawca wypadkowa</th>
+                <th>Pracodawca FP</th>
+                <th>Pracodawca FGSP</th>
+                <th>Pracodawca RAZEM</th>
+            </tr>
+            <!--{row_template}-->
+        </table>
+        </p>
+
+        <p>
+        <table >
+            <tr>
+                <td>Ubezpieczenie społeczne</td>
+                <td>{total_spoleczne}</td>
+            </tr>
+            <tr>
+                <td>Ubezpieczenie zdrowotne</td>
+                <td>{total_zdrow}</td>
+            </tr>
+            <tr>
+                <td>FP</td>
+                <td>{total_FP}</td>
+            </tr>
+            <tr>
+                <td>FGSP</td>
+                <td>{total_FGSP}</td>
+            </tr>
+            <tr>
+                <td>Razem ZUS</td>
+                <td>{total_ZUS}</td>
+            </tr>
+            <tr>
+                <td>PIT</td>
+                <td>{total_PIT}</td>
+            </tr>
+            <tr>
+                <td>ZUS+PIT</td>
+                <td>{total_PIT_ZUS}</td>
+            </tr>
+
+        </table>
+        </p>
+
+    </body>
+</html>
