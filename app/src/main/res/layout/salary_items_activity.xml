@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".frontend.employee.salary_items.SalaryItemsActivity">
+    tools:context=".frontend.employee.salary_items.SalaryItemsActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <requestFocus />
+
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -14,8 +18,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_employee_edit"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:layout_height="wrap_content"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -25,8 +28,8 @@
         android:layout_height="match_parent">
     <TableLayout
         android:id="@+id/tableLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TableRow>
@@ -222,6 +225,7 @@
                 android:id="@+id/editSalaryTotal"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
+                android:enabled="false"
                 />
         </TableRow>
 
@@ -253,6 +257,7 @@
                 android:id="@+id/editSocialPension"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
+                android:enabled="false"
                 />
         </TableRow>
 
@@ -269,6 +274,7 @@
                 android:id="@+id/editSocialRent"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
+                android:enabled="false"
                 />
         </TableRow>
 
@@ -285,6 +291,7 @@
                 android:id="@+id/editSocialIllness"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
+                android:enabled="false"
                 />
         </TableRow>
 
@@ -332,6 +339,7 @@
                 android:id="@+id/editHealthToTake"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
+                android:enabled="false"
                 />
         </TableRow>
 
@@ -394,6 +402,7 @@
                 android:id="@+id/editAdvanceIncomeTax"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
+                android:enabled="false"
                 />
         </TableRow>
 
@@ -411,6 +420,7 @@
                 android:id="@+id/editAmountDue"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
+                android:enabled="false"
                 />
         </TableRow>
 
@@ -428,6 +438,7 @@
                 android:id="@+id/editBossPension"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
+                android:enabled="false"
                 />
         </TableRow>
 
@@ -444,6 +455,7 @@
                 android:id="@+id/editBossRent"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
+                android:enabled="false"
                 />
         </TableRow>
 
@@ -461,6 +473,7 @@
                 android:id="@+id/editBossAccident"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
+                android:enabled="false"
                 />
         </TableRow>
 
@@ -478,6 +491,7 @@
                 android:id="@+id/editBossFP"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
+                android:enabled="false"
                 />
         </TableRow>
 
@@ -494,6 +508,7 @@
                 android:id="@+id/editBossFGSP"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
+                android:enabled="false"
                 />
         </TableRow>
 
