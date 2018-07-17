@@ -27,4 +27,11 @@ public interface EmployeeDao {
 
     @Query("select * from employee where id_employee = :id")
     Employee getSelectedEmployee(long id);
+
+    @Query("select * from employee where id_firm =:idFirm and name > :currentName order by name limit 1")
+    Employee getNextEmployee(long idFirm, String currentName);
+
+    @Query("select * from employee where id_firm =:idFirm and name < :currentName order by name desc limit 1")
+    Employee getPrevEmployee(long idFirm, String currentName);
+
 }

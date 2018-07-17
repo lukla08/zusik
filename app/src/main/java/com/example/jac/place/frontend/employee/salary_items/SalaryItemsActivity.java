@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 
 import com.example.jac.place.R;
 import com.example.jac.place.app.tread_pool.helper.AppConst;
-import com.example.jac.place.app.utils.DoubleUtils;
 import com.example.jac.place.app.utils.StringUtils;
 import com.example.jac.place.backend.SalaryDatabase;
 import com.example.jac.place.backend.model.Employee;
@@ -80,7 +78,7 @@ public class SalaryItemsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_employee_edit);
         setSupportActionBar(toolbar);
 
-        setTitle("Składniki płacowe");
+        setTitle("Składniki");
 
         cEditable = findViewById(R.id.cEditable);
         editEmployeeName = findViewById(R.id.editEmployeeName);
@@ -158,7 +156,7 @@ public class SalaryItemsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_firm_salary, menu);
+        getMenuInflater().inflate(R.menu.menu_salary_item, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -170,9 +168,42 @@ public class SalaryItemsActivity extends AppCompatActivity {
             case R.id.action_save :
                 saveCurrentSalary();
                 return true;
+            case  R.id.action_next:
+                selectEmployee(true);
+                return true;
+            case  R.id.action_prev:
+                selectEmployee(false);
+                return true;
+
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void selectEmployee(boolean isSelectNext) {
+        new AsyncTask<Void, Void, Employee>() {
+
+            @Override
+            protected Employee doInBackground(Void... voids) {
+                directStoreSalary();
+                SalaryDatabase salaryDatabase = SalaryDatabase.getInstance(SalaryItemsActivity.this);
+                Employee nextEmployee = null;
+                if (isSelectNext)
+                    return salaryDatabase.employeeDao().getNextEmployee(selectedEmployee.getFirmId(), selectedEmployee.getName());
+                else
+                    return salaryDatabase.employeeDao().getPrevEmployee(selectedEmployee.getFirmId(), selectedEmployee.getName());
+            }
+
+            @Override
+            protected void onPostExecute(Employee employee) {
+                if (employee != null) {
+                    getIntent().putExtra(EXTRA_KEY_SELECTED_EMPLOYEE_ID, employee.getEmployeeId());
+                    selectedEmployeeId = employee.getEmployeeId();
+                    selectedEmployee = employee;
+                    initializeControls();
+                }
+            }
+        }.execute();
     }
 
     private void saveCurrentSalary() {
@@ -180,13 +211,7 @@ public class SalaryItemsActivity extends AppCompatActivity {
 
             @Override
             protected Boolean doInBackground(Void... voids) {
-                SalaryDatabase salaryDatabase = SalaryDatabase.getInstance(SalaryItemsActivity.this);
-                SalaryItems storedSalary = getRecordPopulatedWithControls();
-                if (storedSalary.getEditable() == 0) {
-                    Firm selectedFirm = salaryDatabase.firmsDao().getSelectedFirm(selectedEmployee.getFirmId());
-                    storedSalary = SalaryItemsCalcUtils.prepareSalaryItems4Employee(selectedEmployee, selectedFirm);
-                }
-                salaryDatabase.salaryItemsDao().insertOrUpdate(storedSalary);
+                directStoreSalary();
                 return true;
             }
 
@@ -196,6 +221,16 @@ public class SalaryItemsActivity extends AppCompatActivity {
             }
         }.execute();
 
+    }
+
+    private void directStoreSalary() {
+        SalaryDatabase salaryDatabase = SalaryDatabase.getInstance(SalaryItemsActivity.this);
+        SalaryItems storedSalary = getRecordPopulatedWithControls();
+        if (storedSalary.getEditable() == 0) {
+            Firm selectedFirm = salaryDatabase.firmsDao().getSelectedFirm(selectedEmployee.getFirmId());
+            storedSalary = SalaryItemsCalcUtils.prepareSalaryItems4Employee(selectedEmployee, selectedFirm);
+        }
+        salaryDatabase.salaryItemsDao().insertOrUpdate(storedSalary);
     }
 
     SalaryItems getRecordPopulatedWithControls() {

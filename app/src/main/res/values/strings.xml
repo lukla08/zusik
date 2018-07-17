@@ -9,4 +9,6 @@
     <string name="title_activity_firm_list">FirmList</string>
     <string name="title_activity_firm_edit">Edycja firmy</string>
     <string name="title_activity_firm_insert">Nowa firma</string>
+    <string name="action_next"><![CDATA[=>]]></string>
+    <string name="action_prev"><![CDATA[<=]]></string>
 </resources>
