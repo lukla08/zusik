@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jac.place.R;
 import com.example.jac.place.app.tread_pool.helper.AppConst;
@@ -29,6 +31,8 @@ import com.example.jac.place.backend.model.Employee;
 import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.frontend.base.BaseAppCompatActivity;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class EmployeeListActivity extends BaseAppCompatActivity {
@@ -122,11 +126,47 @@ public class EmployeeListActivity extends BaseAppCompatActivity {
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.action_send :
-                new AsyncTask<Void, Void, Void >() {
+                new AsyncTask<Void, Void, Object>() {
                     @Override
-                    protected Void doInBackground(Void... voids) {
-                        prepareAndSendFiles();
-                        return null;
+                    protected Object doInBackground(Void... voids) {
+                        try {
+                            return new HtmlGenerator().generateHtml(EmployeeListActivity.this, selectedFirmId);
+                        } catch (Throwable e) {
+                            return e;
+                        }
+                    }
+
+                    @Override
+                    protected void onPostExecute(Object returnedData) {
+                        if (returnedData instanceof File) {
+                            try {
+                                File destFile = (File) returnedData;
+                                Uri uri = Uri.fromFile(destFile);
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                intent.setType("*/*");
+                                intent.putExtra(Intent.EXTRA_EMAIL, "jarochyb@gmail.com");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "dane płacowe");
+                                intent.putExtra(Intent.EXTRA_STREAM, uri);
+                                if (intent.resolveActivity(getPackageManager()) != null) {
+                                    startActivity(intent);
+                                }
+                            } catch (Exception e) {
+                                returnedData = e;
+                            }
+                        }
+
+                        String message = "Operacja zakończona powodzeniem";
+                        int duration = Toast.LENGTH_SHORT;
+                        if (returnedData instanceof  Throwable) {
+                            Throwable caughtException = (Throwable) returnedData;
+                            message = caughtException.getMessage();
+                            duration = Toast.LENGTH_LONG;
+                            caughtException.printStackTrace();
+                            Log.e(AppConst.APP_TAG, Log.getStackTraceString(caughtException));
+                        }
+
+                        Toast.makeText(EmployeeListActivity.this, message, duration).show();
+
                     }
                 }.execute();
 
@@ -136,14 +176,6 @@ public class EmployeeListActivity extends BaseAppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void prepareAndSendFiles() {
-        try {
-            new HtmlGenerator().generateHtmls(this, selectedFirmId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(AppConst.APP_TAG, e.getMessage());
-        }
-    }
 
     private void prepareSampleEmployees() {
         Employee emp1 = new Employee();

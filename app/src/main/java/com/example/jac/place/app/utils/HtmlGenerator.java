@@ -2,6 +2,8 @@ package com.example.jac.place.app.utils;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
@@ -28,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HtmlGenerator {
-    public void generateHtmls(Context ctx, long firmId) throws IOException {
+    public File generateHtml(Context ctx, long firmId) throws IOException {
         List<String> rowTemplateLines = readLines(ctx, R.raw.row_template);
         List<String> mainTemplateLines = readLines(ctx, R.raw.main_template);
         List<ModelItem> modelItems = prepareModel(ctx, firmId);
@@ -59,6 +61,8 @@ public class HtmlGenerator {
             IOUtils.write(resString, fos);
         }
 
+
+        return destFile;
     }
 
     private List<String> processMainTemplate(List<String> template, String joinedRows, ModelItem sumItem) {
