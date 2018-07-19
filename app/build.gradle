@@ -37,5 +37,6 @@ dependencies {
     annotationProcessor 'android.arch.lifecycle:compiler:1.1.0'
 
     implementation 'org.apache.commons:commons-lang3:3.6'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.6'
 
 }

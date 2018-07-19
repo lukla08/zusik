@@ -2,6 +2,7 @@ package com.example.jac.place.app.utils;
 
 import android.Manifest;
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import com.example.jac.place.R;
@@ -12,9 +13,12 @@ import com.example.jac.place.backend.model.Firm;
 import com.example.jac.place.backend.model.SalaryItems;
 import com.example.jac.place.backend.model.utils.SalaryItemsCalcUtils;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,8 +39,26 @@ public class HtmlGenerator {
         String joinedRows = StringUtils.join(processedRows, "");
 
         List<String> resLines = processMainTemplate(mainTemplateLines, joinedRows, sumItem);
-        String loggedData = StringUtils.join(resLines, "");
-        Log.d(AppConst.APP_TAG, "res:" + loggedData);
+
+        SalaryDatabase salaryDatabase = SalaryDatabase.getInstance(ctx);
+        Firm selectedFirm = salaryDatabase.firmsDao().getSelectedFirm(firmId);
+        File externalStorageDirectory = Environment.getExternalStorageDirectory();
+        File destDir = new File(externalStorageDirectory, "tmp_place");
+        boolean destDirCreated =  destDir.mkdir();
+        Log.d(AppConst.APP_TAG, "destDirCreated:" + destDirCreated);
+        File destFile  = new File(destDir, selectedFirm.getFirmName() + ".html");
+        if (destFile.exists()) {
+            Log.d(AppConst.APP_TAG, "destFileExisted");
+            boolean deleted = destFile.delete();
+            Log.d(AppConst.APP_TAG, "destFileDeleted:" + deleted);
+        }
+
+        String resString = StringUtils.join(resLines, " ");
+
+        try (FileOutputStream fos = new FileOutputStream(destFile)) {
+            IOUtils.write(resString, fos);
+        }
+
     }
 
     private List<String> processMainTemplate(List<String> template, String joinedRows, ModelItem sumItem) {
