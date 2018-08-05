@@ -265,8 +265,8 @@ public class SalaryItemsActivity extends AppCompatActivity {
         salaryItems.setCalc_healthTaxToDeduct(StringUtils.toDouble(editHealthToDeduct));;
         salaryItems.setCalc_base4IncomeTax(StringUtils.toLong(editBaseIncomeTax));;
         salaryItems.setCalc_advance4IncomeTaxBrutto(StringUtils.toLong(editAdvanceIncomeTaxBrutto));;
-        salaryItems.setCalc_advance4IncomeTax(StringUtils.toLong(editAdvanceIncomeTax));;
-        salaryItems.setCalc_AmountDue(StringUtils.toLong(editAmountDue));;
+        salaryItems.setCalc_advance4IncomeTax(StringUtils.toLong(editAdvanceIncomeTax));
+        salaryItems.setCalc_AmountDue(StringUtils.toDouble(editAmountDue));
 
         salaryItems.setCalc_BossSocialPension(StringUtils.toDouble(editBossPension));;
         salaryItems.setCalc_BossSocialRent(StringUtils.toDouble(editBossRent));
