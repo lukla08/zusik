@@ -15,7 +15,7 @@ import com.example.jac.place.backend.model.SalaryItems;
 import com.example.jac.place.backend.model.Settings;
 
 @Database(entities = {Settings.class, Employee.class, Firm.class, SalaryItems.class},
-        version = 1, exportSchema = false)
+        version = 2, exportSchema = false)
 public abstract class SalaryDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "place13.gdb";
     private static volatile SalaryDatabase instance;
@@ -29,8 +29,9 @@ public abstract class SalaryDatabase extends RoomDatabase {
     private static SalaryDatabase create(Context context) {
         return Room.databaseBuilder(
                 context,
-                SalaryDatabase.class,
-                DATABASE_NAME).build();
+                SalaryDatabase.class,DATABASE_NAME)
+                .addMigrations(Migrations.MIGRATION_1_2)
+                .build();
     }
 
     public abstract SettingsDao settingsDao();
@@ -38,3 +39,5 @@ public abstract class SalaryDatabase extends RoomDatabase {
     public abstract EmployeeDao employeeDao();
     public abstract SalaryItemsDao salaryItemsDao();
 }
+
+

@@ -17,6 +17,7 @@ public class SalaryItems {
     private double employee_salary12m;
     private boolean employee_isOwner;
     private int employee_illnessDays;
+    private int employee_careDays;
 
     private double calc_costsOfObtaining = 111.25; // kosztyUzyskania
     private double calc_salaray12m_netto;   // przecietne wynagrodzenie za ostatnie 12 mies bez skladek
@@ -306,6 +307,14 @@ public class SalaryItems {
 
     public void setEditable(int editable) {
         this.editable = editable;
+    }
+
+    public void setEmployee_careDays(int employee_careDays) {
+        this.employee_careDays = employee_careDays;
+    }
+
+    public int getEmployee_careDays() {
+        return employee_careDays;
     }
 
     @Override
